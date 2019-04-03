@@ -11,7 +11,7 @@ export default class Store extends React.Component {
     return (
       <SafeAreaView style={styles.storeIcon}>
         <TouchableOpacity
-          onPress={null}
+          onPress={ ()=>{ Linking.openURL('https://www.chewy.com/')}}
           style={styles.chewyContainer}>
           <Image
             source={{uri: 'https://pngimage.net/wp-content/uploads/2018/05/cart-icon-white-png-2.png'}}
