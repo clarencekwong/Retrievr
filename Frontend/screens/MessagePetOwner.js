@@ -21,7 +21,7 @@ export default class MessagePetOwner extends React.Component {
         <TextInput style={styles.messageBody} multiline={true} editable={true}/>
         <TouchableOpacity style={styles.submitMessageButton}>
           <Button
-            onPress={null}
+            onPress={()=>console.log("message sent")}
             title="Send"
             color='black'
             accessibilityLabel="Submit your message to the pet's owner"

@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2019_04_03_135502) do
     t.string "name"
     t.integer "age"
     t.string "breed"
-    t.boolean "missing"
-    t.string "user_id"
-    t.string "vet_id"
+    t.boolean "missing", default: false
+    t.integer "user_id"
+    t.integer "vet_id"
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

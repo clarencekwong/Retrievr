@@ -3,18 +3,23 @@ import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Lin
 import { ExpoLinksView } from '@expo/samples';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import { BarCodeScanner, Camera, Permissions } from 'expo';
+import {connect} from 'react-redux'
 
 import MessagePetOwner from './MessagePetOwner';
+import {toggleMissingPetFound, fetchFoundPet} from '../Redux/actions'
 
 
-export default class LinksScreen extends React.Component {
+class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Scan Tag!',
   };
 
   state = {
     hasCameraPermission: null,
-    scanned: false
+    scanned: false,
+  }
+  handleMissingToggleScan = (data) => {
+    this.props.toggleMissingPetFound(data, this.props.foundPetMissing)
   }
 
   async componentDidMount() {
@@ -58,17 +63,19 @@ export default class LinksScreen extends React.Component {
 
   handleBarCodeScanned = ({ type, data }) => {
     this.setState({ scanned: true })
+    this.props.fetchFoundPet(data)
+    this.handleMissingToggleScan()
     Alert.alert(
       'Owner Found!',
-      `${data}`,
+      "Let them know you found their pet...",
       [
         {text: 'OK', onPress: () => this.props.navigation.navigate('Message', {
-          user: data,
+          user: this.props.ownerName,
         }),
       },
       ],
       {cancelable: false},
-    );
+    )
   }
 }
 
@@ -92,3 +99,14 @@ const styles = StyleSheet.create({
 
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    foundPet: state.foundPet,
+    ownerName: state.ownerName,
+    foundPetMissing: state.foundPetMissing
+  }
+}
+
+
+export default connect(mapStateToProps, {fetchFoundPet, toggleMissingPetFound})(LinksScreen)

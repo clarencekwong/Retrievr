@@ -1,22 +1,26 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-// import { createStackNavigator, navigate, NavigationActions } from 'react-navigation';
+import {fetchMyPets} from "../Redux/actions";
+import {connect} from 'react-redux'
 
 import PetCard from './PetCard';
 import ToggleMissing from './ToggleMissing'
 import ScheduleVetAppt from './ScheduleVetAppt'
 
 
-export default class PetCardContainer extends React.Component {
+class PetCardContainer extends React.Component {
 
+  componentDidMount(){
+    this.props.fetchMyPets()
+  }
 
   render() {
     return (
       <View style={styles.petCardContainer}>
-        <PetCard />
-        <ToggleMissing />
-        <ScheduleVetAppt />
+        <PetCard selectedPet={this.props.selectedPet}/>
+        <ToggleMissing selectedPet={this.props.selectedPet}/>
+        <ScheduleVetAppt selectedPet={this.props.selectedPet}/>
       </View>
     );
   }
@@ -30,3 +34,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
 });
+
+function mapStateToProps(state) {
+  return {
+    selectedPet: state.selectedPet
+  }
+}
+
+export default connect(mapStateToProps, {fetchMyPets})(PetCardContainer)

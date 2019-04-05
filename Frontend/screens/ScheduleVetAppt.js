@@ -11,7 +11,7 @@ export default class ScheduleVetAppt extends React.Component {
     return (
       <SafeAreaView style={styles.vetApptContainer}>
         <Button
-          onPress={null}
+          onPress={() => console.log('button pressed')}
           title="Schedule Vet Appointment"
           color='black'
           accessibilityLabel="Schedule an appointment with your vet"
