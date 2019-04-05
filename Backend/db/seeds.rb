@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 ################ User seeds
-User.create(name: "Eli Cleveland", email: "elicleveland12@gmail.com", password: "1234")
+User.create(name: "Eli Cleveland", email: "elicleveland12@gmail.com", password: "1234", phone: "3152713133")
 User.create(name: "Hermoine Grainger", email: "hgrainger@hogwarts.edu", password: "ron")
 User.create(name: "Jasmine", email: "princessjasmine@hotmail.com", password: "aladin")
 User.create(name: "Goofy", email: "g.oofy@MIT.edu", password: "pi")
