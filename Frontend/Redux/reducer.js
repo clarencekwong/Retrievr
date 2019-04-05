@@ -1,4 +1,4 @@
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION } from './types';
 import { combineReducers } from 'redux';
 
 const initialPetState = {
@@ -38,26 +38,31 @@ function petReducer(state = initialPetState, action) {
   }
 }
 
-// const initialUserState = {
-//   currentUser: null,
-//   name: "",
-//   email: "",
-//   password: "",
-// }
-//
-// function userReducer(state = initialUserState, action) {
-//   switch(action.type) {
-//     case :
-//       return { ...state, };
-//     break;
-//     default:
-//       return state;
-//   }
-// }
+const initialUserState = {
+  currentUser: null,
+  name: "",
+  email: "",
+  password: "",
+  coords: null
+}
 
-export default petReducer
+function userReducer(state = initialUserState, action) {
+  switch(action.type) {
+    case LOCATION:
+    console.log(action.payload);
+      return {
+        ...state,
+        coords: action.payload,
+        };
+    break;
+    default:
+      return state;
+  }
+}
 
-// export default combineReducers({
-//   animal: petReducer,
-//   user: userReducer,
-// })
+// export default petReducer
+
+export default combineReducers({
+  pet: petReducer,
+  user: userReducer,
+})

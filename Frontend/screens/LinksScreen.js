@@ -6,7 +6,7 @@ import { BarCodeScanner, Camera, Permissions } from 'expo';
 import {connect} from 'react-redux'
 
 import MessagePetOwner from './MessagePetOwner';
-import {toggleMissingPetFound, fetchFoundPet} from '../Redux/actions'
+import {toggleMissingPetFound, fetchFoundPet, setFinderLoc} from '../Redux/actions'
 
 
 class LinksScreen extends React.Component {
@@ -16,7 +16,7 @@ class LinksScreen extends React.Component {
 
   state = {
     hasCameraPermission: null,
-    scanned: false,
+    scanned: false
   }
   handleMissingToggleScan = (data) => {
     this.props.toggleMissingPetFound(data, this.props.foundPetMissing)
@@ -25,6 +25,7 @@ class LinksScreen extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted'  });
+    geolocation.requestAuthorization();
   }
 
   runBarCodeScanner = () => {
@@ -62,6 +63,7 @@ class LinksScreen extends React.Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
+    this.props.setFinderLoc()
     this.setState({ scanned: true })
     this.props.fetchFoundPet(data)
     this.handleMissingToggleScan()
@@ -71,6 +73,8 @@ class LinksScreen extends React.Component {
       [
         {text: 'OK', onPress: () => this.props.navigation.navigate('Message', {
           user: this.props.ownerName,
+          latitude: String(this.props.coords.coords.latitude),
+          longitude: String(this.props.coords.coords.longitude),
         }),
       },
       ],
@@ -102,11 +106,13 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    foundPet: state.foundPet,
-    ownerName: state.ownerName,
-    foundPetMissing: state.foundPetMissing
+    foundPet: state.pet.foundPet,
+    ownerName: state.pet.ownerName,
+    foundPetMissing: state.pet.foundPetMissing,
+    coords: state.user.coords,
+
   }
 }
 
 
-export default connect(mapStateToProps, {fetchFoundPet, toggleMissingPetFound})(LinksScreen)
+export default connect(mapStateToProps, {fetchFoundPet, toggleMissingPetFound, setFinderLoc})(LinksScreen)

@@ -1,4 +1,8 @@
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND } from './types';
+
+import React, { Component } from 'react';
+import { View  } from 'react-native';
+
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION } from './types';
 import PetAdapter from './PetAdapter';
 
 
@@ -84,3 +88,20 @@ export function toggleMissingPetFound(petPage, missingBool) {
     type: TOGGLE_MISSING_PET_FOUND,
   }
 }
+
+//////////////////////////////////////////////////////////////
+//                                                          //
+//               Set the FINDER's Location                  //
+//                                                          //
+//////////////////////////////////////////////////////////////
+export function setFinderLoc() {
+  return dispatch => {
+    const geolocation = navigator.geolocation;
+      geolocation.getCurrentPosition((position) => {
+        dispatch({
+          type: LOCATION,
+          payload: position
+        });
+      });
+    }
+  }

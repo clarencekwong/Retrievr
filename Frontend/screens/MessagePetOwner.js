@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Lin
 import { ExpoLinksView } from '@expo/samples';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import { BarCodeScanner, Camera, Permissions } from 'expo';
+import {connect} from 'react-redux'
 
 
 
@@ -14,11 +15,16 @@ export default class MessagePetOwner extends React.Component {
   render() {
     const { navigation } = this.props;
     const user = navigation.getParam('user', 'No name specified');
+    const latitude = navigation.getParam('latitude', 'No location specified')
+    const longitude = navigation.getParam('longitude', 'No location specified')
+    const error = navigation.getParam('error', 'No error specified')
     return (
       <ScrollView keyboardShouldPersistTaps='handled' style={styles.container1}>
         <Text style={styles.prompt}>Let the owner know you've found their pet!</Text>
         <TextInput value={user} style={styles.ownerName} editable={false}/>
-        <TextInput style={styles.messageBody} multiline={true} editable={true}/>
+        <TextInput value={latitude} style={styles.ownerName} editable={false}/>
+        <TextInput value={longitude} style={styles.ownerName} editable={false}/>
+        <TextInput value={error} style={styles.ownerName} editable={false}/>
         <TouchableOpacity style={styles.submitMessageButton}>
           <Button
             onPress={()=>console.log("message sent")}
@@ -76,3 +82,5 @@ const styles = StyleSheet.create({
 
   },
 });
+
+//         <TextInput style={styles.messageBody} multiline={true} editable={true}/>

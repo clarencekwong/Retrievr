@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    selectedPet: state.selectedPet
+    selectedPet: state.pet.selectedPet
   }
 }
 
