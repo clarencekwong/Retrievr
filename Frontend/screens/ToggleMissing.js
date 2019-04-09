@@ -10,26 +10,19 @@ import {toggleOptimisticRender, toggleMissing} from '../Redux/actions'
 class ToggleMissing extends React.Component {
 
 
-  // componentDidMount(){
-  //   console.log("updating", this.props.selectedPet);
-  //   this.props.toggleOptimisticRender(this.props.selectedPet)
-  // }
-
   renderLostPetLocButton = () => {
-    // console.log("line 19", this.props.selectedPet.missing);
-    if (this.props.toggle) {
-      // console.log("line 21", this.props.toggle);
+    if (this.props.selectedPet.missing) {
       if (!this.props.foundPetLat) {
         return <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
           <View>
             <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
-              {this.props.toggle ? 'My pet is missing!😟' : 'Safe and sound 😃'}
+              {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
             </Text>
             <Switch
-             onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet); this.props.flipToggle()}}
-             value = {this.props.toggle}
+             onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+             value = {this.props.selectedPet.missing}
              style={styles.toggleMissing}
-             ios_backgroundColor={this.props.toggle ? '#d63031' : '#00b894'}
+             ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
              trackColor={{false: '#00b894', true: '#d63031'}}/>
            </View>
            <TouchableOpacity style={styles.mapButton} onPress={this.goToLoc}>
@@ -43,13 +36,13 @@ class ToggleMissing extends React.Component {
         return <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
           <View>
             <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
-              {this.props.toggle ? 'My pet is missing!😟' : 'Safe and sound 😃'}
+              {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
             </Text>
             <Switch
-             onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet); this.props.flipToggle()}}
-             value = {this.props.toggle}
+             onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+             value = {this.props.selectedPet.missing}
              style={styles.toggleMissing}
-             ios_backgroundColor={this.props.toggle ? '#d63031' : '#00b894'}
+             ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
              trackColor={{false: '#00b894', true: '#d63031'}}/>
            </View>
            <TouchableOpacity style={styles.mapButtonLocated} onPress={this.goToLoc}>
@@ -63,24 +56,23 @@ class ToggleMissing extends React.Component {
     } else {
       return <SafeAreaView>
         <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
-          {this.props.toggle ? 'My pet is missing!😟' : 'Safe and sound 😃'}
+          {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
         </Text>
         <Switch
-          onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet); this.props.flipToggle()}}
-          value = {this.props.toggle}
+          onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+          value = {this.props.selectedPet.missing}
           style={styles.toggleMissing}
-          ios_backgroundColor={this.props.toggle ? '#d63031' : '#00b894'}
+          ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
           trackColor={{false: '#00b894', true: '#d63031'}}/>
       </SafeAreaView>
     }
   }
 
   goToLoc = () => {
-    createOpenLink({ latitude: this.props.foundPetLat, longitude: this.props.foundPetLon, query: `${this.props.selectedPet.name}` });
+    createOpenLink({ latitude: this.props.foundPetLat, longitude: this.props.foundPetLon, query: `${this.props.selectedPet.missing.name}` });
   }
 
   render() {
-    console.log("Toggle props", this.props.selectedPet);
     return (
       <SafeAreaView style={{marginTop: 18, alignItems: 'center', height: 60}}>
         {this.renderLostPetLocButton()}
@@ -118,11 +110,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  console.log("MAP STATE", state);
   return {
+    totalBullShit: state.pet.totalBullShit,
     selectedPet: state.pet.selectedPet,
-    petMissingToggle: state.pet.petMissingToggle,
-    // selectedPet.missing: state.pet.selectedPet.missing,
     foundPetLat: state.pet.foundPetLat,
     foundPetLon: state.pet.foundPetLon,
   }

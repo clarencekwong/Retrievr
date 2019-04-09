@@ -13,7 +13,6 @@ class MessagePetOwner extends React.Component {
   };
 
   componentDidMount(){
-    console.log("running");
     location = {
       found_latitude: String(this.props.coords.coords.latitude),
       found_longitude: String(this.props.coords.coords.longitude),
@@ -26,7 +25,6 @@ class MessagePetOwner extends React.Component {
       },
       body: JSON.stringify(location)
     })
-    console.log(location);
   }
 
   render() {

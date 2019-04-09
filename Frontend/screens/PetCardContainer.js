@@ -29,22 +29,12 @@ class PetCardContainer extends React.Component {
     this.props.fetchMyPets(this.props.currentUser)
   }
 
-  state = {
-    toggle: this.props.selectedPet.missing
-  }
-
-  flipToggle = () => {
-    this.setState({
-      toggle: !this.state.toggle
-    })
-  }
 
   render() {
-    console.log("pet card container");
     return (
       <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap}>
         <PetCard selectedPet={this.props.selectedPet} />
-        <ToggleMissing toggle={this.state.toggle} flipToggle={this.flipToggle}/>
+        <ToggleMissing />
         <ScheduleVetAppt selectedPet={this.props.selectedPet}/>
       </TouchableOpacity>
     );

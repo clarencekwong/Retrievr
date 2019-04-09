@@ -5,7 +5,6 @@ const initialPetState = {
   selectedPetArray: [],
   selectedPetIndex: 0,
   selectedPet: { },
-  selectedPetMissing: false,
   ownerName: null,
   foundPet: null,
   foundPetMissing: null,
@@ -16,6 +15,7 @@ const initialPetState = {
   addPetBreed: null,
   addPetImage: null,
   addPetUserId: null,
+  totalBullShit: false,
   // petMissingToggle: null
 };
 
@@ -26,7 +26,9 @@ function petReducer(state = initialPetState, action) {
     let newArr = [...state.selectedPetArray]
     let newPetObj = newArr.find(pet => pet.id === action.payload.id)
     newPetObj.missing = action.payload.missing
+    let currentVal = !state.totalBullShit
       return { ...state,
+        totalBullShit: currentVal,
         selectedPetArray: newArr,
         selectedPet: newPetObj,
         selectedPetIndex: newArr.indexOf(newPetObj)
@@ -36,7 +38,6 @@ function petReducer(state = initialPetState, action) {
       return {...state,
         selectedPetIndex: action.payload,
         selectedPet: state.selectedPetArray[action.payload],
-        selectedPetMissing: state.selectedPetArray[action.payload].missing
       }
     break;
     case GET_MY_PETS:
