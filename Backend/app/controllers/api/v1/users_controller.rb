@@ -33,7 +33,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:title, :content)
+    params.permit(:name, :email, :password, :phone)
   end
 
   def find_user

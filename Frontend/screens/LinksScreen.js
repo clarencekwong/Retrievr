@@ -63,19 +63,28 @@ class LinksScreen extends React.Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
-    this.props.setFinderLoc()
+    let petId = data.split(" ").pop()
+    this.props.setFinderLoc(petId)
     this.setState({ scanned: true })
-    this.props.fetchFoundPet(data)
+    this.props.fetchFoundPet(petId)
     this.handleMissingToggleScan()
+    let pos = {
+      found_latitude: this.props.foundPetLat,
+      found_longitude: this.props.foundPetLon,
+    }
+    fetch(`http://10.9.108.116:3000/api/v1/pets/${petId}`, {
+      method: "PATCH",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pos)
+    })
     Alert.alert(
       'Owner Found!',
       "Let them know you found their pet...",
       [
-        {text: 'OK', onPress: () => this.props.navigation.navigate('Message', {
-          user: this.props.ownerName,
-          latitude: String(this.props.coords.coords.latitude),
-          longitude: String(this.props.coords.coords.longitude),
-        }),
+        {text: 'OK', onPress: () => this.props.navigation.navigate('Main'),
       },
       ],
       {cancelable: false},
@@ -109,7 +118,8 @@ function mapStateToProps(state) {
     foundPet: state.pet.foundPet,
     ownerName: state.pet.ownerName,
     foundPetMissing: state.pet.foundPetMissing,
-    coords: state.user.coords,
+    foundPetLat: state.pet.foundPetLat,
+    foundPetLon: state.pet.foundPetLon,
 
   }
 }

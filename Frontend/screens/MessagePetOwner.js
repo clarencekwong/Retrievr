@@ -7,10 +7,27 @@ import {connect} from 'react-redux'
 
 
 
-export default class MessagePetOwner extends React.Component {
+class MessagePetOwner extends React.Component {
   static navigationOptions = {
     title: 'Message',
   };
+
+  componentDidMount(){
+    console.log("running");
+    location = {
+      found_latitude: String(this.props.coords.coords.latitude),
+      found_longitude: String(this.props.coords.coords.longitude),
+    }
+    fetch(`http://10.9.108.116:3000/api/v1/pets/${this.props.foundPet.id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(location)
+    })
+    console.log(location);
+  }
 
   render() {
     const { navigation } = this.props;
@@ -83,4 +100,12 @@ const styles = StyleSheet.create({
   },
 });
 
+function mapStateToProps(state) {
+  return {
+    coords: state.user.coords,
+    foundPet: state.pet.foundPet,
+  }
+}
+
+export default connect(mapStateToProps)(MessagePetOwner)
 //         <TextInput style={styles.messageBody} multiline={true} editable={true}/>

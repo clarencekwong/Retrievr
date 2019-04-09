@@ -13,7 +13,7 @@ export default class ScheduleVetAppt extends React.Component {
         <Button
           onPress={() => console.log('button pressed')}
           title="Schedule Vet Appointment"
-          color='black'
+          color='white'
           accessibilityLabel="Schedule an appointment with your vet"
           style={styles.vetApptButton}
         />
@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
   vetApptContainer: {
     justifyContent: 'center',
     marginTop: 18,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#00b894',
     height: 50,
     width: '100%',
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: 'green',
+    borderColor: 'white',
   },
   vetApptButton: {
     fontSize: 16,

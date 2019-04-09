@@ -72,5 +72,5 @@ export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
-  MessagePetOwnerStack,
+  // MessagePetOwnerStack,
 });

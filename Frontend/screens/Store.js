@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   chewyContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'dodgerblue',
+    backgroundColor: '#74b9ff',
     borderRadius: 10,
     alignItems: 'center',
 

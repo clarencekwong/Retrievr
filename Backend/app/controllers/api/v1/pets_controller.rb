@@ -15,8 +15,7 @@ class Api::V1::PetsController < ApplicationController
   end
 
   def update
-    # byebug
-    @pet.update(missing: params[:missing])
+    @pet.update(pet_params)
     render json: @pet, status: :OK
   end
 
@@ -33,6 +32,6 @@ class Api::V1::PetsController < ApplicationController
   end
 
   def pet_params
-    params.permit(:id, :missing)
+    params.permit(:id, :name, :age, :breed, :missing, :image, :last_vet_visit, :missing_latitude, :missing_longitude, :found_latitude, :found_longitude)
   end
 end

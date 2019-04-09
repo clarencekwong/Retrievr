@@ -1,6 +1,10 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, Image, Button } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+// import {connect} from 'react-redux'
+
+
+
 
 
 
@@ -8,16 +12,16 @@ export default class PetCard extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.petCardContainer}>
-        <Text style={{color: 'black', paddingLeft: 10, paddingTop: 10, fontSize: 22}}>{this.props.selectedPet.name}</Text>
+      <View style={styles.petCardContainer}>
+        <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 22}}>{this.props.selectedPet.name}</Text>
         <Image
           source={{uri: `${this.props.selectedPet.image}`}}
           style={styles.petImage}
         />
-        <Text style={{paddingLeft: 10, paddingTop: 10, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
-        <Text style={{paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.age}</Text>
-        <Text style={{paddingLeft: 10, paddingTop: 5, fontSize: 16}}>Last Vet Visit: {this.props.selectedPet.last_vet_visit}</Text>
-      </SafeAreaView>
+        <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
+        <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.age}</Text>
+        <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>Last Vet Visit: {this.props.selectedPet.last_vet_visit}</Text>
+      </View>
     );
   }
 }
@@ -25,9 +29,9 @@ export default class PetCard extends React.Component {
 const styles = StyleSheet.create({
   petCardContainer: {
     height: '62%',
-    backgroundColor: '#fff',
+    backgroundColor: '#00b894',
     borderWidth: 2,
-    borderColor: 'green',
+    borderColor: 'white',
     borderRadius: 10,
   },
   petImage: {
@@ -39,3 +43,5 @@ const styles = StyleSheet.create({
 
   },
 });
+
+// export default connect(mapStateToProps)(PetCard)
