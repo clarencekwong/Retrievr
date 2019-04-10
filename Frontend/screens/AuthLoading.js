@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
-    StyleSheet,
-    View,
-} from 'react-native';
+import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View} from 'react-native';
 import { connect } from 'react-redux';
-import { getUserToken } from '../actions';
+import { getUserToken } from '../Redux/actions';
 
 class AuthLoadingScreen extends React.Component {
     static navigationOptions = {
@@ -25,7 +19,7 @@ class AuthLoadingScreen extends React.Component {
     _bootstrapAsync = () => {
 
         this.props.getUserToken().then(() => {
-            this.props.navigation.navigate(this.props.token.token !== null ? 'App' : 'Auth');
+            this.props.navigation.navigate('Main');
         })
             .catch(error => {
                 this.setState({ error })
@@ -35,6 +29,7 @@ class AuthLoadingScreen extends React.Component {
 
     // Render any loading content that you like here
     render() {
+      console.log(this.props.token, this.props.token.token);
         return (
             <View style={styles.container}>
                 <ActivityIndicator />
@@ -52,14 +47,14 @@ const styles = StyleSheet.create({
     },
 });
 
-function mapStateToProps(state) => {
+function mapStateToProps(state) {
   return {
-    token: state.token,
+    token: state.user.token,
   }
 };
 
 
-function mapDispatchToProps(dispatch) => {
+function mapDispatchToProps(dispatch) {
   return {
     getUserToken: () => dispatch(getUserToken()),
   }

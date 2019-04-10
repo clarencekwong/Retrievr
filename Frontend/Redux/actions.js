@@ -15,7 +15,7 @@ export function toggleMissing(pet) {
     let data = {
       missing: !pet.missing
     }
-    fetch(`http://10.9.108.116:3000/api/v1/pets/${pet.id}`, {
+    fetch(`http://10.9.107.202:3000/api/v1/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -28,10 +28,6 @@ export function toggleMissing(pet) {
        dispatch({type: TOGGLE_MISSING, payload: petObj})
     })
   }
-  // return {
-  //   type: TOGGLE_MISSING,
-  //   payload: data.missing
-  // }
 }
 export function toggleOptimisticRender(pet) {
   return {
@@ -88,7 +84,7 @@ export function toggleMissingPetFound(petPage, missingBool) {
   let data = {
     missing: !missingBool
   }
-  fetch(`http://10.9.108.116:3000/api/v1/pets/${petPage}`, {
+  fetch(`http://10.9.107.202:3000/api/v1/pets/${petPage}`, {
     method: "PATCH",
     headers: {
       Accept: 'application/json',
@@ -137,6 +133,7 @@ export function setCurrentUser(email, password, nav) {
       let foundUser = userAttempt[0]
       let userId = foundUser.id
       if (foundUser.password === String(password)) {
+
         dispatch({
           type: SET_USER,
           payload: userId

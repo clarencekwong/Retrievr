@@ -72,7 +72,7 @@ class LinksScreen extends React.Component {
       found_latitude: this.props.foundPetLat,
       found_longitude: this.props.foundPetLon,
     }
-    fetch(`http://10.9.108.116:3000/api/v1/pets/${petId}`, {
+    fetch(`http://10.9.107.202:3000/api/v1/pets/${petId}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

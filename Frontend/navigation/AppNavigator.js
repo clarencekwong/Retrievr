@@ -5,6 +5,7 @@ import MainTabNavigator from './MainTabNavigator';
 import SignUp from '../screens/SignUp'
 import LogIn from '../screens/LogIn'
 import HomeScreen from '../screens/HomeScreen'
+import AuthLoading from '../screens/AuthLoading'
 
 export default createAppContainer(createSwitchNavigator({
   // You could add another route here for authentication.

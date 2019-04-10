@@ -1,7 +1,24 @@
 import { createStore, applyMiddleware } from 'redux';
+import {AsyncStorage} from 'react-native'
 import petReducer from './reducer'; // trick with imports
 import thunk from 'redux-thunk';
+import {persistStore, persistReducer} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-const store = createStore(petReducer, applyMiddleware(thunk));
+import rootReducer from './reducer'
 
-export default store;
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+let store = createStore(persistedReducer)
+let persistor = persistStore(store)
+
+export default { store, persistor}
+// export default  {
+//   console.log("in store.js", store);
+//   return { store, persistor }
+// }

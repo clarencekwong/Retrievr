@@ -174,8 +174,6 @@ function userReducer(state = initialUserState, action) {
   }
 }
 
-// export default petReducer
-
 export default combineReducers({
   pet: petReducer,
   user: userReducer,
