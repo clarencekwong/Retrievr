@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView} from 'react-native'
+import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Linking} from 'react-native'
 import { ExpoConfigView } from '@expo/samples';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import {connect} from 'react-redux'
@@ -13,10 +13,21 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   };
 
+
   state = {
     myPetsButtonPress: false,
     addPetButtonPress: false,
     youSure: false,
+    me: { },
+    myDetail: false,
+  }
+
+  componentDidMount() {
+    fetch(`http://10.9.107.37:3000/api/v1/users/${this.props.currentUser}`)
+    .then(r=>r.json())
+    .then(user => {
+      this.setState({ me: user })
+    })
   }
 
   logOut = () => {
@@ -35,6 +46,24 @@ class SettingsScreen extends React.Component {
   renderAddPet = () => {
     if (this.state.addPetButtonPress) {
       return <AddPet />
+    }
+  }
+
+  renderMyDetail = () => {
+    if (this.state.myDetail) {
+      return (<View style={{backgroundColor: '#00b894'}}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(`tel:${this.state.me.phone}`)}
+            style={styles.petButtons}>
+            <Text style={{color: '#00b894', fontSize: 18, marginTop: 5, textAlign: 'center'}}>{this.state.me.phone}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={null}
+            style={styles.petButtons}>
+            <Text style={{color: '#00b894', fontSize: 18, marginTop: 5, textAlign: 'center'}}>{this.state.me.email}</Text>
+          </TouchableOpacity>
+        </View>
+      )
     }
   }
 
@@ -62,23 +91,29 @@ class SettingsScreen extends React.Component {
     return(
       <ScrollView>
         <TouchableOpacity
-          onPress={() => this.setState({ myPetsButtonPress: false, addPetButtonPress: false, youSure: !this.state.youSure})}
+          onPress={() => this.setState({myDetail: false, myPetsButtonPress: false, addPetButtonPress: false, youSure: !this.state.youSure})}
           style={styles.logInSignUp}>
           <Text style={{color: 'white', fontSize: 18, marginTop: 5, textAlign: 'center'}}>Log Out</Text>
         </TouchableOpacity>
         {this.renderYouSure()}
         <TouchableOpacity
-          onPress={() => this.setState({ myPetsButtonPress: false, addPetButtonPress: !this.state.addPetButtonPress, youSure: false})}
+          onPress={() => this.setState({myDetail: false, myPetsButtonPress: false, addPetButtonPress: !this.state.addPetButtonPress, youSure: false})}
           style={styles.logInSignUp}>
           <Text style={{color: 'white', fontSize: 18, marginTop: 5, textAlign: 'center'}}>Add Pet ➕</Text>
         </TouchableOpacity>
         {this.renderAddPet()}
         <TouchableOpacity
-          onPress={() => this.setState({ myPetsButtonPress: !this.state.myPetsButtonPress, addPetButtonPress: false, youSure: false})}
+          onPress={() => this.setState({myDetail: false, myPetsButtonPress: !this.state.myPetsButtonPress, addPetButtonPress: false, youSure: false})}
           style={styles.logInSignUp}>
           <Text style={{color: 'white', fontSize: 18, marginTop: 5, textAlign: 'center'}}>My Pets</Text>
         </TouchableOpacity>
         {this.renderPetList()}
+        <TouchableOpacity
+          onPress={() => this.setState({myDetail: !this.state.myDetail, myPetsButtonPress: false, addPetButtonPress: false, youSure: false})}
+          style={styles.logInSignUp}>
+          <Text style={{color: 'white', fontSize: 18, marginTop: 5, textAlign: 'center'}}>{this.state.me.name}</Text>
+        </TouchableOpacity>
+        {this.renderMyDetail()}
       </ScrollView>
     )
   }

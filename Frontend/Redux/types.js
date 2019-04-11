@@ -10,6 +10,7 @@ export const REMOVE_TOKEN = "REMOVE_TOKEN";
 export const ERROR = "ERROR";
 export const LOADING = "LOADING";
 export const EMAIL_INPUT = "EMAIL_INPUT";
+export const NAME_INPUT = "NAME_INPUT";
 export const PASSWORD_INPUT = "PASSWORD_INPUT";
 export const PASSWORD_CONFIRMATION = "PASSWORD_CONFIRMATION";
 export const PHONE_INPUT = "PHONE_INPUT";

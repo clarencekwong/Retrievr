@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, Image, Switch, Button, Alert } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Image, Switch, Button, Alert, Linking } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import {connect} from 'react-redux'
 import createOpenLink from 'react-native-open-maps';
@@ -9,7 +9,9 @@ import { toggleMissing} from '../Redux/actions'
 class ToggleMissing extends React.Component {
 
   state = {
-    petHasBeenLocated: false
+    petHasBeenLocated: false,
+    lat: null,
+    log: null,
   }
 
   componentDidMount() {
@@ -22,13 +24,13 @@ class ToggleMissing extends React.Component {
     .then(result => result.json())
     .then(pet => {
       if (pet.found_latitude !== null) {
-        this.setState({ petHasBeenLocated: true })
+        this.setState({ petHasBeenLocated: true, lat: pet.found_latitude, lon: pet.found_longitude })
         Alert.alert(
           `${this.props.selectedPet.name} has been found!`,
-          `Your pet was located by ${this.props.selectedPet.finder_name}`,
+          `Your pet was located by ${pet.finder_name}`,
           [
-            {text: 'OK', onPress: ()=>this.stopInt,
-          },
+            {text: 'OK', onPress: ()=>this.stopInt},
+            {text: 'Call', onPress: ()=> Linking.openURL(`tel:${pet.finder_phone_number}`)}
           ],
           {cancelable: false},
         )
@@ -100,7 +102,7 @@ class ToggleMissing extends React.Component {
   }
 
   goToLoc = () => {
-    createOpenLink({ latitude: parseFloat(this.props.foundPetLat), longitude: parseFloat(this.props.foundPetLon), query: `${this.props.selectedPet.name}` });
+    createOpenLink({ latitude: parseFloat(this.state.lat), longitude: parseFloat(this.state.lon), query: `${this.props.selectedPet.name}` });
   }
 
   render() {
@@ -141,11 +143,17 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {
-    passiveTrigger: state.pet.passiveTrigger,
-    selectedPet: state.pet.selectedPet,
-    foundPetLat: state.pet.selectedPet.found_latitude,
-    foundPetLon: state.pet.selectedPet.found_longitude,
+  if (!state.pet.selectedPet) {
+    return {
+      passiveTrigger: state.pet.passiveTrigger,
+    }
+  } else {
+    return {
+      passiveTrigger: state.pet.passiveTrigger,
+      selectedPet: state.pet.selectedPet,
+      foundPetLat: state.pet.selectedPet.found_latitude,
+      foundPetLon: state.pet.selectedPet.found_longitude,
+    }
   }
 }
 
