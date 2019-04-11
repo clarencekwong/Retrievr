@@ -1,23 +1,42 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-// import { createStackNavigator, navigate, NavigationActions } from 'react-navigation';
+import {fetchMyPets, cycleMyPets} from "../Redux/actions";
+import {connect} from 'react-redux'
+import {toggleMissing} from '../Redux/actions'
+
 
 import PetCard from './PetCard';
 import ToggleMissing from './ToggleMissing'
 import ScheduleVetAppt from './ScheduleVetAppt'
 
 
-export default class PetCardContainer extends React.Component {
+class PetCardContainer extends React.Component {
+
+  lastTap = null
+
+  doubleTap = () => {
+    const now = Date.now()
+    const DOUBLE_PRESS_DELAY = 300
+    if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
+      this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length)
+    } else {
+      this.lastTap = now
+    }
+  }
+
+  componentDidMount(){
+    this.props.fetchMyPets(this.props.currentUser)
+  }
 
 
   render() {
     return (
-      <View style={styles.petCardContainer}>
-        <PetCard />
+      <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap}>
+        <PetCard selectedPet={this.props.selectedPet} />
         <ToggleMissing />
-        <ScheduleVetAppt />
-      </View>
+        <ScheduleVetAppt selectedPet={this.props.selectedPet}/>
+      </TouchableOpacity>
     );
   }
 }
@@ -30,3 +49,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
 });
+
+function mapStateToProps(state) {
+  return {
+    selectedPetArray: state.pet.selectedPetArray,
+    selectedPetIndex: state.pet.selectedPetIndex,
+    selectedPet: state.pet.selectedPet,
+    currentUser: state.user.currentUser
+  }
+}
+
+export default connect(mapStateToProps, {fetchMyPets, cycleMyPets, toggleMissing} )(PetCardContainer)

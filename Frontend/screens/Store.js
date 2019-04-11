@@ -11,11 +11,11 @@ export default class Store extends React.Component {
     return (
       <SafeAreaView style={styles.storeIcon}>
         <TouchableOpacity
-          onPress={null}
-          style={styles.chewyContainer}>
+          onPress={ ()=>{ Linking.openURL('https://www.chewy.com/')}}
+          style={styles.iconContainer}>
           <Image
             source={{uri: 'https://pngimage.net/wp-content/uploads/2018/05/cart-icon-white-png-2.png'}}
-            style={styles.chewyImg}
+            style={styles.cartImg}
           />
         </TouchableOpacity>
       </SafeAreaView>
@@ -29,18 +29,19 @@ const styles = StyleSheet.create({
     width: 140,
     marginHorizontal: 10
   },
-  chewyContainer: {
+  iconContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'dodgerblue',
+    backgroundColor: '#74b9ff',
     borderRadius: 10,
     alignItems: 'center',
 
   },
-  chewyImg: {
+  cartImg: {
     marginTop: 5,
     width: 136,
     height: 136,
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -3,25 +3,46 @@ import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Lin
 import { ExpoLinksView } from '@expo/samples';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import { BarCodeScanner, Camera, Permissions } from 'expo';
+import {connect} from 'react-redux'
 
 
 
-export default class MessagePetOwner extends React.Component {
+class MessagePetOwner extends React.Component {
   static navigationOptions = {
     title: 'Message',
   };
 
+  componentDidMount(){
+    location = {
+      found_latitude: String(this.props.coords.coords.latitude),
+      found_longitude: String(this.props.coords.coords.longitude),
+    }
+    fetch(`http://10.9.107.37:3000/api/v1/pets/${this.props.foundPet.id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(location)
+    })
+  }
+
   render() {
     const { navigation } = this.props;
     const user = navigation.getParam('user', 'No name specified');
+    const latitude = navigation.getParam('latitude', 'No location specified')
+    const longitude = navigation.getParam('longitude', 'No location specified')
+    const error = navigation.getParam('error', 'No error specified')
     return (
       <ScrollView keyboardShouldPersistTaps='handled' style={styles.container1}>
         <Text style={styles.prompt}>Let the owner know you've found their pet!</Text>
         <TextInput value={user} style={styles.ownerName} editable={false}/>
-        <TextInput style={styles.messageBody} multiline={true} editable={true}/>
+        <TextInput value={latitude} style={styles.ownerName} editable={false}/>
+        <TextInput value={longitude} style={styles.ownerName} editable={false}/>
+        <TextInput value={error} style={styles.ownerName} editable={false}/>
         <TouchableOpacity style={styles.submitMessageButton}>
           <Button
-            onPress={null}
+            onPress={()=>console.log("message sent")}
             title="Send"
             color='black'
             accessibilityLabel="Submit your message to the pet's owner"
@@ -76,3 +97,12 @@ const styles = StyleSheet.create({
 
   },
 });
+
+function mapStateToProps(state) {
+  return {
+    coords: state.user.coords,
+    foundPet: state.pet.foundPet,
+  }
+}
+
+export default connect(mapStateToProps)(MessagePetOwner)

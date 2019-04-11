@@ -3,11 +3,13 @@ import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Lin
 import { ExpoLinksView } from '@expo/samples';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import { BarCodeScanner, Camera, Permissions } from 'expo';
+import {connect} from 'react-redux'
 
 import MessagePetOwner from './MessagePetOwner';
+import {sendFinderInfo, toggleMissingPetFound, fetchFoundPet, setFinderLoc} from '../Redux/actions'
 
 
-export default class LinksScreen extends React.Component {
+class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Scan Tag!',
   };
@@ -20,6 +22,7 @@ export default class LinksScreen extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted'  });
+    geolocation.requestAuthorization();
   }
 
   runBarCodeScanner = () => {
@@ -57,18 +60,34 @@ export default class LinksScreen extends React.Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
+    let petId = data.split(" ").pop()
+    this.props.setFinderLoc(petId)
     this.setState({ scanned: true })
+    this.props.fetchFoundPet(petId)
+    this.props.sendFinderInfo(this.props.currentUser)
+    let pos = {
+      finder_name: this.props.finderName,
+      finder_phone_number: this.props.finderPhone,
+      found_latitude: this.props.foundPetLat,
+      found_longitude: this.props.foundPetLon,
+    }
+    fetch(`http://10.9.107.37:3000/api/v1/pets/${petId}`, {
+      method: "PATCH",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pos)
+    })
     Alert.alert(
       'Owner Found!',
-      `${data}`,
+      "Let them know you found their pet...",
       [
-        {text: 'OK', onPress: () => this.props.navigation.navigate('Message', {
-          user: data,
-        }),
+        {text: 'OK', onPress: () => this.props.navigation.navigate('Main'),
       },
       ],
       {cancelable: false},
-    );
+    )
   }
 }
 
@@ -92,3 +111,20 @@ const styles = StyleSheet.create({
 
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    foundPet: state.pet.foundPet,
+    ownerName: state.pet.ownerName,
+    foundPetMissing: state.pet.foundPetMissing,
+    foundPetLat: state.pet.foundPetLat,
+    foundPetLon: state.pet.foundPetLon,
+    currentUser: state.user.currentUser,
+    finderName: state.pet.finderName,
+    finderPhone: state.pet.finderPhone,
+
+  }
+}
+
+
+export default connect(mapStateToProps, {fetchFoundPet, toggleMissingPetFound, setFinderLoc, sendFinderInfo})(LinksScreen)
