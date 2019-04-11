@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, Alert} from 'react-native'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import {connect} from 'react-redux'
-import {onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone, onSignUp} from '../Redux/actions'
+import {onChangeTextName, onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone, onSignUp} from '../Redux/actions'
 import PetAdapter from '../Redux/PetAdapter';
 import * as EmailValidator from 'email-validator';
 
@@ -12,13 +12,14 @@ class SignUp extends React.Component {
   signUp = (e) => {
     e.preventDefault()
     let signUpData = {
+      name: this.props.name,
       email: this.props.email,
       password: this.props.password,
       phone: this.props.phone,
     }
-    if (this.props.password === this.props.passwordConfirmation && EmailValidator.validate(this.props.email) && (this.props.phone.length === 10)) {
+    if (this.props.password === this.props.passwordConfirmation && EmailValidator.validate(this.props.email) && (this.props.phone.length === 10) && (this.props.name !== null)) {
       PetAdapter.postToUsers(signUpData)
-      this.props.navigation.navigate('LogIn')
+      this.props.navigation.navigate('SettingsScreen')
     } else {
       Alert.alert(
       'Invalid Credentials',
@@ -44,6 +45,13 @@ class SignUp extends React.Component {
             style={styles.welcomeImage}
           />
         </View>
+        <TextInput
+          style={styles.input}
+          placeholder='Name'
+          autoCapitalize="none"
+          placeholderTextColor='white'
+          onChangeText={event => this.props.onChangeTextName(event)}
+        />
         <TextInput
           style={styles.input}
           placeholder='Email'
@@ -142,7 +150,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone})(SignUp);
+export default connect(mapStateToProps, {onChangeTextName, onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone})(SignUp);
 
 /**************************************************
 - get redirected here on /sign up/ button click from LogIn page

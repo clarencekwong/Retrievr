@@ -193,6 +193,13 @@ export function setFinderLoc() {
 //                     User Sign Up                         //
 //                                                          //
 //////////////////////////////////////////////////////////////
+
+export function onChangeTextName(event) {
+  return {
+    type: NAME_INPUT,
+    payload: event
+  }
+}
 export function onChangeTextEmail(event) {
   return {
     type: EMAIL_INPUT,

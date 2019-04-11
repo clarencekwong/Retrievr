@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
+import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import PetAdapter from '../Redux/PetAdapter';
 import {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage} from '../Redux/actions'
 
