@@ -6,7 +6,7 @@ import { BarCodeScanner, Camera, Permissions } from 'expo';
 import {connect} from 'react-redux'
 
 import MessagePetOwner from './MessagePetOwner';
-import {toggleMissingPetFound, fetchFoundPet, setFinderLoc} from '../Redux/actions'
+import {sendFinderInfo, toggleMissingPetFound, fetchFoundPet, setFinderLoc} from '../Redux/actions'
 
 
 class LinksScreen extends React.Component {
@@ -17,9 +17,6 @@ class LinksScreen extends React.Component {
   state = {
     hasCameraPermission: null,
     scanned: false
-  }
-  handleMissingToggleScan = (data) => {
-    this.props.toggleMissingPetFound(data, this.props.foundPetMissing)
   }
 
   async componentDidMount() {
@@ -67,12 +64,14 @@ class LinksScreen extends React.Component {
     this.props.setFinderLoc(petId)
     this.setState({ scanned: true })
     this.props.fetchFoundPet(petId)
-    this.handleMissingToggleScan()
+    this.props.sendFinderInfo(this.props.currentUser)
     let pos = {
+      finder_name: this.props.finderName,
+      finder_phone_number: this.props.finderPhone,
       found_latitude: this.props.foundPetLat,
       found_longitude: this.props.foundPetLon,
     }
-    fetch(`http://10.9.107.202:3000/api/v1/pets/${petId}`, {
+    fetch(`http://10.9.107.37:3000/api/v1/pets/${petId}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -120,9 +119,12 @@ function mapStateToProps(state) {
     foundPetMissing: state.pet.foundPetMissing,
     foundPetLat: state.pet.foundPetLat,
     foundPetLon: state.pet.foundPetLon,
+    currentUser: state.user.currentUser,
+    finderName: state.pet.finderName,
+    finderPhone: state.pet.finderPhone,
 
   }
 }
 
 
-export default connect(mapStateToProps, {fetchFoundPet, toggleMissingPetFound, setFinderLoc})(LinksScreen)
+export default connect(mapStateToProps, {fetchFoundPet, toggleMissingPetFound, setFinderLoc, sendFinderInfo})(LinksScreen)

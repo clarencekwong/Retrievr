@@ -1,78 +1,114 @@
 import React from 'react'
-import { View, Button, TextInput, StyleSheet, AsyncStorage} from 'react-native'
+import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import PetAdapter from '../Redux/PetAdapter';
+import {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage} from '../Redux/actions'
+
 
 class AddPet extends React.Component {
 
-
-
   addPetToMyProfile = () => {
-    let dogAttr = {
-      addPetName: this.props.addPetName,
-      addPetAge: this.props.addPetAge,
-      addPetBreed: this.props.addPetBreed,
-      addPetImage: this.props.addPetImage,
-      addPetUserId: this.props.currentUserId,
+    let petAttr = {
+      name: this.props.addPetName,
+      age: parseInt(this.props.addPetAge),
+      breed: this.props.addPetBreed,
+      image: this.props.addPetImage,
+      user_id: this.props.currentUser,
     }
+    console.log(petAttr);
+    fetch('http://10.9.107.37:3000/api/v1/pets/', {
+      method: "POST",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(petAttr)
+    })
+    this.props.navigation.navigate('Main')
   }
 
   render() {
     return (
-      <View style={styles.signUpContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder='Name'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('name', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Age'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('age', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Breed'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('breed', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Image URL'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('image', val)}
-        />
-        <Button
-          title='Sign Up'
-          onPress={this.signUp}
-        />
-      </View>
+      <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#00b894'}}>
+        <KeyboardAvoidingView style={styles.signUpContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder='Name'
+            autoCapitalize="none"
+            placeholderTextColor='#00b894'
+            onChangeText={event => this.props.onChangeTextPetName(event)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder='Age'
+            autoCapitalize="none"
+            placeholderTextColor='#00b894'
+            onChangeText={event => this.props.onChangeTextPetAge(event)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder='Breed'
+            autoCapitalize="none"
+            placeholderTextColor='#00b894'
+            onChangeText={event => this.props.onChangeTextPetBreed(event)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder='Image URL'
+            autoCapitalize="none"
+            placeholderTextColor='#00b894'
+            onChangeText={event => this.props.onChangeTextImage(event)}
+          />
+          <TouchableOpacity
+            onPress={this.addPetToMyProfile}
+            style={styles.submit}>
+            <Text style={{color: '#00b894', fontSize: 18, marginTop: 5, textAlign: 'center'}}>Add Pet</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
   input: {
-    width: 350,
+    width: 275,
     height: 55,
-    backgroundColor: '#42A5F5',
+    backgroundColor: 'white',
+    opacity: 0.8,
     margin: 10,
     padding: 8,
-    color: 'white',
+    color: '#00b894',
     borderRadius: 14,
     fontSize: 18,
     fontWeight: '500',
   },
   signUpContainer: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center'
+  },
+  submit: {
+    width: 200,
+    height: 55,
+    backgroundColor: 'white',
+    margin: 10,
+    padding: 8,
+    color: '#00b894',
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  backButton: {
+    width: 100,
+    height: 55,
+    backgroundColor: '#00b894',
+    margin: 10,
+    padding: 8,
+    color: 'white',
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: '500',
   }
 })
 
@@ -82,13 +118,8 @@ function mapStateToProps(state) {
     addPetAge: state.pet.addPetAge,
     addPetBreed: state.pet.addPetBreed,
     addPetImage: state.pet.addPetImage,
-    addPetUserId: state.user.addPetUserId,
+    currentUser: state.user.currentUser,
   }
 }
 
-export default connect(mapStateToProps)(AddPet);
-
-/*
--
-
-*/
+export default connect(mapStateToProps, {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage})(AddPet);

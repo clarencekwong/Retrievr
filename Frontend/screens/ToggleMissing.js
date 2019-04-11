@@ -1,18 +1,49 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, Image, Switch, Button } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, Image, Switch, Button, Alert } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import {connect} from 'react-redux'
 import createOpenLink from 'react-native-open-maps';
-import {toggleOptimisticRender, toggleMissing} from '../Redux/actions'
-
+import { toggleMissing} from '../Redux/actions'
 
 
 class ToggleMissing extends React.Component {
 
+  state = {
+    petHasBeenLocated: false
+  }
+
+  componentDidMount() {
+    this.setState({ petHasBeenLocated: false })
+    this.interval = setInterval(()=> this.getItems(), 3000);
+  }
+
+  getItems() {
+    fetch(`http://10.9.107.37:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    .then(result => result.json())
+    .then(pet => {
+      if (pet.found_latitude !== null) {
+        this.setState({ petHasBeenLocated: true })
+        Alert.alert(
+          `${this.props.selectedPet.name} has been found!`,
+          `Your pet was located by ${this.props.selectedPet.finder_name}`,
+          [
+            {text: 'OK', onPress: ()=>this.stopInt,
+          },
+          ],
+          {cancelable: false},
+        )
+        this.stopInt()
+      }
+    })
+  }
+
+  stopInt = () => {
+    clearInterval(this.interval)
+  }
 
   renderLostPetLocButton = () => {
     if (this.props.selectedPet.missing) {
-      if (!this.props.foundPetLat) {
+      if (!this.state.petHasBeenLocated) {
         return <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
           <View>
             <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
@@ -69,7 +100,7 @@ class ToggleMissing extends React.Component {
   }
 
   goToLoc = () => {
-    createOpenLink({ latitude: this.props.foundPetLat, longitude: this.props.foundPetLon, query: `${this.props.selectedPet.missing.name}` });
+    createOpenLink({ latitude: parseFloat(this.props.foundPetLat), longitude: parseFloat(this.props.foundPetLon), query: `${this.props.selectedPet.name}` });
   }
 
   render() {
@@ -111,11 +142,11 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    totalBullShit: state.pet.totalBullShit,
+    passiveTrigger: state.pet.passiveTrigger,
     selectedPet: state.pet.selectedPet,
-    foundPetLat: state.pet.foundPetLat,
-    foundPetLon: state.pet.foundPetLon,
+    foundPetLat: state.pet.selectedPet.found_latitude,
+    foundPetLon: state.pet.selectedPet.found_longitude,
   }
 }
 
-export default connect(mapStateToProps, {toggleOptimisticRender, toggleMissing})(ToggleMissing);
+export default connect(mapStateToProps, { toggleMissing})(ToggleMissing);

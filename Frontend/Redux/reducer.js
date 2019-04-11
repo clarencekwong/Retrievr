@@ -1,4 +1,4 @@
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO } from './types';
 import { combineReducers } from 'redux';
 
 const initialPetState = {
@@ -14,9 +14,7 @@ const initialPetState = {
   addPetAge: null,
   addPetBreed: null,
   addPetImage: null,
-  addPetUserId: null,
-  totalBullShit: false,
-  // petMissingToggle: null
+  passiveTrigger: false,
 };
 
 
@@ -26,9 +24,9 @@ function petReducer(state = initialPetState, action) {
     let newArr = [...state.selectedPetArray]
     let newPetObj = newArr.find(pet => pet.id === action.payload.id)
     newPetObj.missing = action.payload.missing
-    let currentVal = !state.totalBullShit
+    let currentVal = !state.passiveTrigger
       return { ...state,
-        totalBullShit: currentVal,
+        passiveTrigger: currentVal,
         selectedPetArray: newArr,
         selectedPet: newPetObj,
         selectedPetIndex: newArr.indexOf(newPetObj)
@@ -62,6 +60,7 @@ function petReducer(state = initialPetState, action) {
         ...state,
         foundPetLat: action.payload.coords.latitude,
         foundPetLon: action.payload.coords.longitude,
+        passiveTrigger: !state.passiveTrigger,
         };
     break;
     case ADD_PET_NAME:
@@ -84,11 +83,12 @@ function petReducer(state = initialPetState, action) {
         addPetImage: action.payload,
       }
     break;
-    case ADD_PET_USER_ID:
-      return {...state,
-        addPetUserId: action.payload,
+    case FINDER_INFO:
+      return {
+        ...state,
+        finderName: action.payload.name,
+        finderPhone: action.payload.phone
       }
-    break;
     default:
       return state;
   }
@@ -139,35 +139,11 @@ function userReducer(state = initialUserState, action) {
         phone: action.payload,
         };
     break;
-    case GET_TOKEN:
+    case LOG_OUT:
       return {
         ...state,
-        token: action.payload.token,
-        };
-    break;
-    case SAVE_TOKEN:
-      return {
-        ...state,
-        token: action.payload.token,
-        };
-    break;
-    case REMOVE_TOKEN:
-      return {
-        ...state,
-        token: action.payload.token,
-        };
-    break;
-    case LOADING:
-      return {
-        ...state,
-        loading: action.payload.isLoading.bool,
-      };
-    break;
-    case ERROR:
-      return {
-        ...state,
-        error: action.payload.error,
-        };
+        currentUser: null
+      }
     break;
     default:
       return state;

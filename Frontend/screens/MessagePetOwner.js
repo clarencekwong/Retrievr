@@ -17,7 +17,7 @@ class MessagePetOwner extends React.Component {
       found_latitude: String(this.props.coords.coords.latitude),
       found_longitude: String(this.props.coords.coords.longitude),
     }
-    fetch(`http://10.9.107.202:3000/api/v1/pets/${this.props.foundPet.id}`, {
+    fetch(`http://10.9.107.37:3000/api/v1/pets/${this.props.foundPet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -106,4 +106,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(MessagePetOwner)
-//         <TextInput style={styles.messageBody} multiline={true} editable={true}/>

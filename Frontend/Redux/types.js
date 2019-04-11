@@ -21,3 +21,5 @@ export const ADD_PET_USER_ID = "ADD_PET_USER_ID";
 export const INCREMENT_MY_PET_INDEX = "INCREMENT_MY_PET_INDEX";
 export const SET_USER = "SET_USER";
 export const OPTIMISTIC_TOGGLE = "OPTIMISTIC_TOGGLE";
+export const LOG_OUT = "LOG_OUT";
+export const FINDER_INFO = "FINDER_INFO";

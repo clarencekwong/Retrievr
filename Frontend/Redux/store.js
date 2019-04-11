@@ -10,15 +10,11 @@ import rootReducer from './reducer'
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
-let store = createStore(persistedReducer)
+let store = createStore(persistedReducer, applyMiddleware(thunk))
 let persistor = persistStore(store)
 
 export default { store, persistor}
-// export default  {
-//   console.log("in store.js", store);
-//   return { store, persistor }
-// }

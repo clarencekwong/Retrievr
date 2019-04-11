@@ -1,7 +1,7 @@
 import { View, AsyncStorage, Alert } from 'react-native';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO } from './types';
 import PetAdapter from './PetAdapter';
 
 
@@ -13,9 +13,13 @@ import PetAdapter from './PetAdapter';
 export function toggleMissing(pet) {
   return dispatch => {
     let data = {
-      missing: !pet.missing
+      missing: !pet.missing,
+      finder_name: null,
+      finder_phone_number: null,
+      found_latitude: null,
+      found_longitude: null,
     }
-    fetch(`http://10.9.107.202:3000/api/v1/pets/${pet.id}`, {
+    fetch(`http://10.9.107.37:3000/api/v1/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -80,22 +84,18 @@ export function fetchFoundPet(id){
   }
 }
 
-export function toggleMissingPetFound(petPage, missingBool) {
-  let data = {
-    missing: !missingBool
-  }
-  fetch(`http://10.9.107.202:3000/api/v1/pets/${petPage}`, {
-    method: "PATCH",
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data)
-  })
-  return {
-    type: TOGGLE_MISSING_PET_FOUND,
+export function sendFinderInfo(userId) {
+  return dispatch => {
+    PetAdapter.getMyPets(userId)
+    .then(user => {
+      dispatch({
+        type: FINDER_INFO,
+        payload: user
+      })
+    })
   }
 }
+
 
 //////////////////////////////////////////////////////////////
 //                                                          //
@@ -124,7 +124,6 @@ export function cycleMyPets(index, length) {
 //                 Set the Current user                     //
 //                                                          //
 //////////////////////////////////////////////////////////////
-
 export function setCurrentUser(email, password, nav) {
   return dispatch => {
     PetAdapter.getUsers()
@@ -154,8 +153,23 @@ export function setCurrentUser(email, password, nav) {
       )
       }
     })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+        throw error;})
   }
 }
+
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Logging out                         //
+//                                                          //
+//////////////////////////////////////////////////////////////
+export function logOutCurrentUser() {
+  return {
+    type: LOG_OUT
+  }
+}
+
 
 //////////////////////////////////////////////////////////////
 //                                                          //
@@ -209,98 +223,27 @@ export function onChangeTextPhone(event) {
 //                     Adding a pet                         //
 //                                                          //
 //////////////////////////////////////////////////////////////
-export function onChangeTextPetName(name) {
+export function onChangeTextPetName(event) {
   return {
     type: ADD_PET_NAME,
-    payload: name
+    payload: event
   }
 }
-export function onChangeTextPetAge(age) {
+export function onChangeTextPetAge(event) {
   return {
     type: ADD_PET_AGE,
-    payload: age
+    payload: event
   }
 }
-export function onChangeTextPetBreed(breed) {
+export function onChangeTextPetBreed(event) {
   return {
     type: ADD_PET_BREED,
-    payload: breed
+    payload: event
   }
 }
-export function onChangeTextImage(image) {
+export function onChangeTextImage(event) {
   return {
     type: ADD_PET_IMAGE,
-    payload: image
+    payload: event
   }
 }
-export function onChangeTextPetUserId(id) {
-  return {
-    type: ADD_PET_USER_ID,
-    payload: id
-  }
-}
-
-//////////////////////////////////////////////////////////////
-//                                                          //
-//           Persisting user authentication                 //
-//                                                          //
-//////////////////////////////////////////////////////////////
-export const getToken = (token) => ({
-    type: GET_TOKEN,
-    payload: token
-});
-
-export const saveToken = token => ({
-    type: SAVE_TOKEN,
-    payload: token
-});
-
-export const removeToken = () => ({
-    type: REMOVE_TOKEN,
-});
-
-export const loading = bool => ({
-  type: LOADING,
-  payload: isLoading.bool,
-})
-
-export const error = error => ({
-  type: ERROR,
-  payload: error
-})
-
-export const getUserToken = () => dispatch =>
-AsyncStorage.getItem('userToken')
-  .then((data) => {
-      dispatch(loading(false));
-      dispatch(getToken(data));
-  })
-  .catch((err) => {
-      dispatch(loading(false));
-      dispatch(error(err.message || 'ERROR'));
-  })
-
-
-
-export const saveUserToken = (data) => dispatch =>
-AsyncStorage.setItem('userToken', 'abc')
-  .then((data) => {
-      dispatch(loading(false));
-      dispatch(saveToken('token saved'));
-  })
-  .catch((err) => {
-      dispatch(loading(false));
-      dispatch(error(err.message || 'ERROR'));
-  })
-
-
-export const removeUserToken = () => dispatch =>
-  AsyncStorage.removeItem('userToken')
-  .then((data) => {
-      dispatch(loading(false));
-      dispatch(removeToken(data));
-  })
-  .catch((err) => {
-      dispatch(loading(false));
-      dispatch(error(err.message || 'ERROR'));
-  })
