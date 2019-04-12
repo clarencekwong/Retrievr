@@ -8,7 +8,6 @@ import {toggleMissing} from '../Redux/actions'
 
 import PetCard from './PetCard';
 import ToggleMissing from './ToggleMissing'
-import ScheduleVetAppt from './ScheduleVetAppt'
 
 
 class PetCardContainer extends React.Component {
@@ -51,14 +50,12 @@ class PetCardContainer extends React.Component {
       return (<View>
         <PetCard selectedPet={this.state.defaultPet} />
         <ToggleMissing selectedPet={this.state.defaultPet}/>
-        <ScheduleVetAppt selectedPet={this.state.defaultPet}/>
       </View>
       )
     } else {
       return (<View>
         <PetCard selectedPet={this.props.selectedPet} />
         <ToggleMissing />
-        <ScheduleVetAppt selectedPet={this.props.selectedPet}/>
       </View>
       )
     }

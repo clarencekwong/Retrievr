@@ -5,16 +5,16 @@ import { ExpoLinksView } from '@expo/samples';
 // import { BarCodeScanner, Camera, Permissions } from 'expo';
 
 
-export default class ScheduleVetAppt extends React.Component {
+export default class CallFinder extends React.Component {
 
   render() {
     return (
       <SafeAreaView style={styles.vetApptContainer}>
         <Button
-          onPress={() => console.log('button pressed')}
-          title="Schedule Vet Appointment"
+          onPress={()=> Linking.openURL(`tel:${this.props.number}`)}
+          title="Call Retrievr 📞"
           color='white'
-          accessibilityLabel="Schedule an appointment with your vet"
+          accessibilityLabel="Call person who found your pet"
           style={styles.vetApptButton}
         />
       </SafeAreaView>

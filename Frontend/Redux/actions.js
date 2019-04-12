@@ -19,7 +19,7 @@ export function toggleMissing(pet) {
       found_latitude: null,
       found_longitude: null,
     }
-    fetch(`http://10.9.107.37:3000/api/v1/pets/${pet.id}`, {
+    fetch(`http://10.9.105.231:3000/api/v1/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

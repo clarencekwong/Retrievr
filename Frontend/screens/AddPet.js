@@ -16,8 +16,7 @@ class AddPet extends React.Component {
       image: this.props.addPetImage,
       user_id: this.props.currentUser,
     }
-    console.log(petAttr);
-    fetch('http://10.9.107.37:3000/api/v1/pets/', {
+    fetch('http://10.9.105.231:3000/api/v1/pets/', {
       method: "POST",
       headers: {
         Accept: 'application/json',

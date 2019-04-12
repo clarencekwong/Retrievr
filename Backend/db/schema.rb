@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_04_10_181239) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "last_vet_visit"
+    t.datetime "last_vet_visit"
     t.string "missing_latitude"
     t.string "missing_longitude"
     t.string "found_latitude"

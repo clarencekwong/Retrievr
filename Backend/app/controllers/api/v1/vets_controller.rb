@@ -1,5 +1,5 @@
 class Api::V1::VetsController < ApplicationController
-  before_action :find_vet, only: [:update]
+  before_action :find_vet, only: [:update, :show]
   def index
   @vets = Vet.all
   render json: @vets
@@ -33,7 +33,7 @@ class Api::V1::VetsController < ApplicationController
   private
 
   def vet_params
-  params.permit(:title, :content)
+  params.permit(:name, :phone_number, :location)
   end
 
   def find_vet

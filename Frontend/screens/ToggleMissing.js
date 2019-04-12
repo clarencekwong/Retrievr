@@ -4,6 +4,7 @@ import { ExpoLinksView } from '@expo/samples';
 import {connect} from 'react-redux'
 import createOpenLink from 'react-native-open-maps';
 import { toggleMissing} from '../Redux/actions'
+import CallFinder from './CallFinder'
 
 
 class ToggleMissing extends React.Component {
@@ -12,6 +13,7 @@ class ToggleMissing extends React.Component {
     petHasBeenLocated: false,
     lat: null,
     log: null,
+    finderPhone: null,
   }
 
   componentDidMount() {
@@ -20,17 +22,16 @@ class ToggleMissing extends React.Component {
   }
 
   getItems() {
-    fetch(`http://10.9.107.37:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    fetch(`http://10.9.105.231:3000/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
       if (pet.found_latitude !== null) {
-        this.setState({ petHasBeenLocated: true, lat: pet.found_latitude, lon: pet.found_longitude })
+        this.setState({ finderPhone: pet.finder_phone_number, petHasBeenLocated: true, lat: pet.found_latitude, lon: pet.found_longitude })
         Alert.alert(
           `${this.props.selectedPet.name} has been found!`,
           `Your pet was located by ${pet.finder_name}`,
           [
             {text: 'OK', onPress: ()=>this.stopInt},
-            {text: 'Call', onPress: ()=> Linking.openURL(`tel:${pet.finder_phone_number}`)}
           ],
           {cancelable: false},
         )
@@ -46,7 +47,7 @@ class ToggleMissing extends React.Component {
   renderLostPetLocButton = () => {
     if (this.props.selectedPet.missing) {
       if (!this.state.petHasBeenLocated) {
-        return <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
+        return <SafeAreaView style={{flex: 1, flexDirection: 'row', marginTop: 32}}>
           <View>
             <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
               {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
@@ -66,28 +67,33 @@ class ToggleMissing extends React.Component {
            </TouchableOpacity>
         </SafeAreaView>
       } else {
-        return <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
-          <View>
-            <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
-              {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
-            </Text>
-            <Switch
-             onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
-             value = {this.props.selectedPet.missing}
-             style={styles.toggleMissing}
-             ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
-             trackColor={{false: '#00b894', true: '#d63031'}}/>
-           </View>
-           <TouchableOpacity style={styles.mapButtonLocated} onPress={this.goToLoc}>
-            <Image
-              style={{width: 70, height: 60}}
-              source={{uri: 'https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/355/original/map.png?1510933432'}}
-            />
-           </TouchableOpacity>
+        return <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
+          <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
+            <View>
+              <Text style={{fontSize: 18, paddingBottom: 30, textAlign: 'center'}}>
+                {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
+              </Text>
+              <Switch
+               onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+               value = {this.props.selectedPet.missing}
+               style={styles.toggleMissing}
+               ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
+               trackColor={{false: '#00b894', true: '#d63031'}}/>
+             </View>
+             <TouchableOpacity style={styles.mapButtonLocated} onPress={this.goToLoc}>
+              <Image
+                style={{width: 70, height: 60}}
+                source={{uri: 'https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/355/original/map.png?1510933432'}}
+              />
+             </TouchableOpacity>
+           </SafeAreaView>
+           <SafeAreaView style={{marginTop: 60}}>
+            <CallFinder number={this.state.finderPhone}/>
+          </SafeAreaView>
         </SafeAreaView>
       }
     } else {
-      return <SafeAreaView>
+      return <SafeAreaView style={{marginTop: 32}}>
         <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
           {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
         </Text>
@@ -99,6 +105,10 @@ class ToggleMissing extends React.Component {
           trackColor={{false: '#00b894', true: '#d63031'}}/>
       </SafeAreaView>
     }
+  }
+
+  handleMissingToggle = () => {
+
   }
 
   goToLoc = () => {
@@ -151,8 +161,6 @@ function mapStateToProps(state) {
     return {
       passiveTrigger: state.pet.passiveTrigger,
       selectedPet: state.pet.selectedPet,
-      foundPetLat: state.pet.selectedPet.found_latitude,
-      foundPetLon: state.pet.selectedPet.found_longitude,
     }
   }
 }

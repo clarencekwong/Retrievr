@@ -1,6 +1,6 @@
 export default class PetAdapter {
-  static PET_URL = "http://10.9.107.37:3000/api/v1/pets"
-  static USER_URL = "http://10.9.107.37:3000/api/v1/users"
+  static PET_URL = "http://10.9.105.231:3000/api/v1/pets"
+  static USER_URL = "http://10.9.105.231:3000/api/v1/users"
 //****** When changing the url to whatever my wifi port is... DO NOT FORGET THE HTTP://
   static getPets() {
     return fetch(`${this.PET_URL}`)
