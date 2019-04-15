@@ -13,7 +13,6 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   };
 
-
   state = {
     myPetsButtonPress: false,
     addPetButtonPress: false,
@@ -23,7 +22,7 @@ class SettingsScreen extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://10.9.105.231:3000/api/v1/users/${this.props.currentUser}`)
+    fetch(`http://10.9.105.14:3000/api/v1/users/${this.props.currentUser}`)
     .then(r=>r.json())
     .then(user => {
       this.setState({ me: user })
@@ -43,9 +42,14 @@ class SettingsScreen extends React.Component {
     }
   }
 
+  toggleAddPetState = () => {
+    console.log("everything worked")
+    this.setState({ addPetButtonPress: false })
+  }
+
   renderAddPet = () => {
     if (this.state.addPetButtonPress) {
-      return <AddPet />
+      return <AddPet addPetButtonPress={this.state.addPetButtonPress} toggleAddPetState={this.toggleAddPetState} />
     }
   }
 
@@ -85,7 +89,6 @@ class SettingsScreen extends React.Component {
       )
     }
   }
-
 
   render() {
     return(

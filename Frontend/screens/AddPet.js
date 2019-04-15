@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView} from 'react-native'
+import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Alert } from 'react-native'
 import {connect} from 'react-redux'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import PetAdapter from '../Redux/PetAdapter';
-import {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage} from '../Redux/actions'
+import {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet} from '../Redux/actions'
 
 
 class AddPet extends React.Component {
@@ -16,15 +16,40 @@ class AddPet extends React.Component {
       image: this.props.addPetImage,
       user_id: this.props.currentUser,
     }
-    fetch('http://10.9.105.231:3000/api/v1/pets/', {
-      method: "POST",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(petAttr)
-    })
-    this.props.navigation.navigate('Main')
+    if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.props.addPetImage) {
+      fetch('http://10.9.105.14:3000/api/v1/pets/', {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(petAttr)
+      })
+      .then(() => {
+        this.props.clearAddPet()
+        this.props.toggleAddPetState()
+        Alert.alert(
+          'Pet Added!',
+          "You successfully added your furry friend",
+          [
+            {text: 'OK', onPress: () => console.log("added"),
+          },
+          ],
+          {cancelable: false},
+        )
+      })
+    } else {
+      this.props.clearAddPet()
+      Alert.alert(
+        'Pet Not added',
+        "Please be sure to fill in all fields",
+        [
+          {text: 'OK', onPress: () => console.log("fill it out"),
+        },
+        ],
+        {cancelable: false},
+      )
+    }
   }
 
   render() {
@@ -60,7 +85,7 @@ class AddPet extends React.Component {
             onChangeText={event => this.props.onChangeTextImage(event)}
           />
           <TouchableOpacity
-            onPress={this.addPetToMyProfile}
+            onPress={() => this.addPetToMyProfile()}
             style={styles.submit}>
             <Text style={{color: '#00b894', fontSize: 18, marginTop: 5, textAlign: 'center'}}>Add Pet</Text>
           </TouchableOpacity>
@@ -85,7 +110,6 @@ const styles = StyleSheet.create({
   },
   signUpContainer: {
     flex: 1,
-    // justifyContent: 'center',
     alignItems: 'center'
   },
   submit: {
@@ -122,4 +146,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage})(AddPet);
+export default connect(mapStateToProps, {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet})(AddPet);

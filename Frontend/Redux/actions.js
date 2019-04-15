@@ -1,7 +1,7 @@
 import { View, AsyncStorage, Alert } from 'react-native';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, CLEAR_ADD_PET } from './types';
 import PetAdapter from './PetAdapter';
 
 
@@ -19,7 +19,7 @@ export function toggleMissing(pet) {
       found_latitude: null,
       found_longitude: null,
     }
-    fetch(`http://10.9.105.231:3000/api/v1/pets/${pet.id}`, {
+    fetch(`http://10.9.105.14:3000/api/v1/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -252,5 +252,16 @@ export function onChangeTextImage(event) {
   return {
     type: ADD_PET_IMAGE,
     payload: event
+  }
+}
+
+//////////////////////////////////////////////////////////////
+//                                                          //
+//              Clearing form post add                      //
+//                                                          //
+//////////////////////////////////////////////////////////////
+export function clearAddPet() {
+  return {
+    type: CLEAR_ADD_PET
   }
 }

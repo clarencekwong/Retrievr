@@ -3,8 +3,6 @@ import {TouchableOpacity, View, Text} from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 
-
-
 export default class ScheduleVetAppointment extends Component {
 
   state = {
@@ -16,7 +14,7 @@ export default class ScheduleVetAppointment extends Component {
       appoint = {
         last_vet_visit: this.state.date
       }
-      fetch(`http://10.9.105.231:3000/api/v1/pets/${this.props.pet.id}`, {
+      fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.pet.id}`, {
         method: "PATCH",
         headers: {
           Accept: 'application/json',

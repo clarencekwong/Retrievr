@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
+          <TouchableOpacity style={styles.welcomeContainer}>
             <Image
               source={
                 __DEV__
@@ -33,7 +33,7 @@ export default class HomeScreen extends React.Component {
               }
               style={styles.welcomeImage}
             />
-          </View>
+          </TouchableOpacity>
           <SafeAreaView style={styles.aContainer}>
             <PetCardContainer />
             <BottomButtons />

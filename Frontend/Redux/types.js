@@ -24,3 +24,4 @@ export const SET_USER = "SET_USER";
 export const OPTIMISTIC_TOGGLE = "OPTIMISTIC_TOGGLE";
 export const LOG_OUT = "LOG_OUT";
 export const FINDER_INFO = "FINDER_INFO";
+export const CLEAR_ADD_PET = "CLEAR_ADD_PET";

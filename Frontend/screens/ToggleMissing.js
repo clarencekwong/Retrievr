@@ -22,7 +22,7 @@ class ToggleMissing extends React.Component {
   }
 
   getItems() {
-    fetch(`http://10.9.105.231:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
       if (pet.found_latitude !== null) {

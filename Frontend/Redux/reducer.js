@@ -1,4 +1,4 @@
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, NAME_INPUT } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, NAME_INPUT, CLEAR_ADD_PET } from './types';
 import { combineReducers } from 'redux';
 
 const initialPetState = {
@@ -83,6 +83,13 @@ function petReducer(state = initialPetState, action) {
         addPetImage: action.payload,
       }
     break;
+    case CLEAR_ADD_PET:
+    return {...state,
+      addPetName: null,
+      addpetage: null,
+      addPetBreed: null,
+      addPetImage: null,
+    }
     case FINDER_INFO:
       return {
         ...state,
