@@ -12,7 +12,6 @@ import SettingsScreen from '../screens/SettingsScreen'
 export default createAppContainer(createSwitchNavigator({
   LogIn: LogIn,
   SignUp: SignUp,
-  AddPet: AddPet,
   SettingsScreen: SettingsScreen,
   Main: MainTabNavigator,
 }));

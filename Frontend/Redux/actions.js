@@ -1,7 +1,7 @@
 import { View, AsyncStorage, Alert } from 'react-native';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, CLEAR_ADD_PET } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, CLEAR_ADD_PET, CHANGE_APPOINTMENT } from './types';
 import PetAdapter from './PetAdapter';
 
 
@@ -40,21 +40,26 @@ export function toggleOptimisticRender(pet) {
   }
 }
 
+///////////////
+
+export function toggleAptChange() {
+  return {
+    type: CHANGE_APPOINTMENT
+  }
+}
+
 //////////////////////////////////////////////////////////////
 //                                                          //
 //       Rendering user's pets to the home screen           //
 //                                                          //
 //////////////////////////////////////////////////////////////
-
-// make this work where a double tap can cycle through the user's pets
 export function filterPets(userObj) {
   return {
     type: GET_MY_PETS,
     payload: userObj.pets
   }
 }
-///////////////// make this dynamic so the number that gets passed in is based
-//////////////// who is currently logged in
+
 export function fetchMyPets(id) {
   return (dispatch) => {
     PetAdapter.getMyPets(id)

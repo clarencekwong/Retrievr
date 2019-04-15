@@ -43,7 +43,6 @@ class SettingsScreen extends React.Component {
   }
 
   toggleAddPetState = () => {
-    console.log("everything worked")
     this.setState({ addPetButtonPress: false })
   }
 

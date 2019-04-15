@@ -16,6 +16,8 @@ class EditPet extends React.Component {
     vetSelector: false,
   }
 
+
+
   componentDidMount() {
     fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.pet.id}`)
     .then(r=>r.json())
@@ -31,7 +33,7 @@ class EditPet extends React.Component {
 
   renderDatePicker = () => {
     if (this.state.scheduler) {
-      return <ScheduleVetAppointment pet={this.props.pet} vet={this.state.vet} />
+      return <ScheduleVetAppointment pet={this.props.pet} vet={this.state.vet}/>
     } else if (this.state.vetSelector) {
       return <VetDropdown vets={this.state.vets} />
     }

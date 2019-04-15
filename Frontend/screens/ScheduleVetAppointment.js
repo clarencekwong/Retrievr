@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import {TouchableOpacity, View, Text} from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
+import {connect} from 'react-redux'
+import {toggleAptChange} from '../Redux/actions'
 
-export default class ScheduleVetAppointment extends Component {
+class ScheduleVetAppointment extends Component {
 
   state = {
     date: null
@@ -22,6 +24,19 @@ export default class ScheduleVetAppointment extends Component {
         },
         body: JSON.stringify(appoint)
       })
+      .then(() => {
+        this.setState({date: null})
+      })
+    this.props.toggleAptChange()
+    Alert.alert(
+      'Appointment Created!',
+      "Your vet will reach out to you to confirm your appointment",
+      [
+        {text: 'OK', onPress: () => console.log("added"),
+      },
+      ],
+      {cancelable: false},
+    )
     }
   }
 
@@ -59,3 +74,11 @@ export default class ScheduleVetAppointment extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    toggleAptChange: state.pet.toggleAptChange,
+  }
+}
+
+export default connect(mapStateToProps, {toggleAptChange})(ScheduleVetAppointment)

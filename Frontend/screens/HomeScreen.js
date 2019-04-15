@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  SafeAreaView,
-} from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, RefreshControl } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 import PetCardContainer from './PetCardContainer';
 import BottomButtons from './BottomButtons';
+
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
