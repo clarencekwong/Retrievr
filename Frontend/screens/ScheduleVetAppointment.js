@@ -16,7 +16,7 @@ class ScheduleVetAppointment extends Component {
       appoint = {
         last_vet_visit: this.state.date
       }
-      fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.pet.id}`, {
+      fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.pet.id}`, {
         method: "PATCH",
         headers: {
           Accept: 'application/json',

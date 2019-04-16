@@ -1,19 +1,44 @@
 import React from 'react';
-import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, RefreshControl } from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, RefreshControl, KeyboardAvoidingView } from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
+import {connect} from 'react-redux'
+
 import PetCardContainer from './PetCardContainer';
 import BottomButtons from './BottomButtons';
+import MissingPetPoster from './MissingPetPoster';
+import {togglePoster} from '../Redux/actions'
 
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+  componentDidMount(){
+    this.props.togglePoster()
+  }
+
+  toggleButtons = () => {
+    if (this.props.toggleMissingPetPoster && this.props.selectedPet.missing) {
+      return (
+        <ScrollView style={styles.missingPoster}>
+          <MissingPetPoster />
+        </ScrollView>
+      )
+    } else {
+      return (
+        <SafeAreaView style={styles.aContainer}>
+          <PetCardContainer />
+          <BottomButtons />
+        </SafeAreaView>
+      )
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <TouchableOpacity style={styles.welcomeContainer}>
             <Image
@@ -25,12 +50,9 @@ export default class HomeScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </TouchableOpacity>
-          <SafeAreaView style={styles.aContainer}>
-            <PetCardContainer />
-            <BottomButtons />
-          </SafeAreaView>
+          {this.toggleButtons()}
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -58,6 +80,15 @@ export default class HomeScreen extends React.Component {
   }
 
 }
+
+function mapStateToProps(state) {
+  return {
+    toggleMissingPetPoster: state.pet.toggleMissingPetPoster,
+    selectedPet: state.pet.selectedPet,
+  }
+}
+
+export default connect(mapStateToProps, {togglePoster})(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {

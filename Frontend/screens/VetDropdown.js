@@ -22,7 +22,7 @@ class VetDropdown extends React.Component {
     let petVet = {
       vet_id: this.state.selectedVet
     }
-    fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.selectedPet.id}`, {
+    fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.selectedPet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

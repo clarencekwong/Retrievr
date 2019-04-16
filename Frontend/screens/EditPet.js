@@ -19,12 +19,12 @@ class EditPet extends React.Component {
 
 
   componentDidMount() {
-    fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.pet.id}`)
+    fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.pet.id}`)
     .then(r=>r.json())
     .then(pet => {
       this.setState({ vet: pet.vet})
     })
-    fetch("http://10.9.105.14:3000/api/v1/vets")
+    fetch("http://10.9.105.24:3000/api/v1/vets")
     .then(res => res.json())
     .then(vets => {
       this.setState({ vets: vets })

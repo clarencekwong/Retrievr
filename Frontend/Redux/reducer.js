@@ -1,4 +1,4 @@
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, NAME_INPUT, CLEAR_ADD_PET, CHANGE_APPOINTMENT } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, SET_MY_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, NAME_INPUT, CLEAR_ADD_PET, CHANGE_APPOINTMENT, TOGGLE_POSTER } from './types';
 import { combineReducers } from 'redux';
 
 const initialPetState = {
@@ -16,6 +16,7 @@ const initialPetState = {
   addPetImage: null,
   passiveTrigger: false,
   toggleAptChange: false,
+  toggleMissingPetPoster: false,
 };
 
 
@@ -30,7 +31,13 @@ function petReducer(state = initialPetState, action) {
         passiveTrigger: currentVal,
         selectedPetArray: newArr,
         selectedPet: newPetObj,
-        selectedPetIndex: newArr.indexOf(newPetObj)
+        selectedPetIndex: newArr.indexOf(newPetObj),
+        toggleMissingPetPoster: state.selectedPet.missing ? true : false,
+      }
+    break;
+    case TOGGLE_POSTER:
+      return {...state,
+        toggleMissingPetPoster: false,
       }
     break;
     case INCREMENT_MY_PET_INDEX:

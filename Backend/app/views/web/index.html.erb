@@ -1,0 +1,81 @@
+<head>
+  <style>
+    body {
+      background-image: url("https://bear.org/wp-content/uploads/2008/01/marking_utility_pole_mud.jpg");
+      background-repeat: no-repeat, repeat;
+      background-position: center;
+      background-size: cover;
+      font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+    .poster-container {
+      text-align: center;
+    }
+    .poster {
+      background-image: url("https://i.pinimg.com/originals/b2/34/4f/b2344f505822df9ff64c7641c55c4159.jpg");
+      background-repeat: no-repeat, repeat;
+      background-position: center;
+      margin-bottom: 30px;
+      margin-left: 50px;
+      display: inline-block;
+      width: 600px;
+      height: 820px;
+    }
+    .top-label {
+      display: inline;
+      font-size: 48px
+    }
+    .breed {
+      padding-left: 100px;
+    }
+    .pet-image {
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <% @posters.each do |poster| %>
+    <% if poster.pet.missing == true %>
+      <div class="poster-container">
+        <div class="poster" onclick="mapsSelector(<%= poster.missing_lat%>, <%= poster.missing_lon%>)">
+          <h1 style="text-align: center; font-size: 60px; color: red;">Missing</h1>
+          <div>
+            <h2 class="top-label"><%= poster.pet.name %></h2>
+            <h2 class="top-label breed"><%= poster.pet.breed %></h2>
+          </div>
+          <div class="pet-image">
+            <img src=<%=poster.pet.image%> height="300" width="380">
+          </div>
+          <p class="bottom" style="font-size: 42px;">Age: <%= poster.pet.age %> </p>
+          <p class="bottom"> <%= poster.descriptors %> </p>
+          <p class="bottom" style="font-size: 34px;"> Missing since: <%= poster.missing_time %> </p>
+          <p class="bottom" style="font-size: 28px;"> Click this poster for the last known location of this pet<p>
+        </div>
+      </div>
+    <% else %>
+    <div class="poster-container">
+      <div class="poster">
+        <h1 style="text-align: center; font-size: 60px; color: red;">No pets are currently missing!</h1>
+        <div class="pet-image">
+          <img src="https://thumbs.gfycat.com/MellowDeadLacewing-size_restricted.gif" height="300" width="380">
+        </div>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
+  <script>
+    function mapsSelector(lat, lon) {
+      if
+        ((navigator.platform.indexOf("iPhone") != -1) ||
+         (navigator.platform.indexOf("iPod") != -1) ||
+         (navigator.platform.indexOf("iPad") != -1))
+        window.open(`maps://maps.google.com/maps?daddr=${lat},${lon}&amp;ll=`);
+
+      else
+        window.open(`https://maps.google.com/maps?daddr=${lat},${lon}&amp;ll=`);
+    }
+  </script>
+</body>

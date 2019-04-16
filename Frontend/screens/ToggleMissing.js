@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import createOpenLink from 'react-native-open-maps';
 import { toggleMissing} from '../Redux/actions'
 import CallFinder from './CallFinder'
+import MissingPetPoster from './MissingPetPoster'
 
 
 class ToggleMissing extends React.Component {
@@ -22,7 +23,7 @@ class ToggleMissing extends React.Component {
   }
 
   getItems() {
-    fetch(`http://10.9.105.14:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
       if (pet.found_latitude !== null) {
@@ -44,16 +45,27 @@ class ToggleMissing extends React.Component {
     clearInterval(this.interval)
   }
 
+  toggleTheMissingSwitch = () => {
+    this.props.toggleMissing(this.props.selectedPet)
+    if (this.props.selectedPet.posters) {
+      if (!this.props.selectedPet.missing) {
+        fetch(`http://10.9.105.24:3000/api/v1/posters/${this.props.selectedPet.posters.id}`, {
+          method: "DELETE"
+        })
+      }
+    }
+  }
+
   renderLostPetLocButton = () => {
     if (this.props.selectedPet.missing) {
       if (!this.state.petHasBeenLocated) {
-        return <SafeAreaView style={{flex: 1, flexDirection: 'row', marginTop: 32}}>
+        return <SafeAreaView style={{flex: 1, flexDirection: 'row'}}>
           <View>
             <Text style={{fontSize: 18, paddingBottom: 5, textAlign: 'center'}}>
               {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
             </Text>
             <Switch
-             onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+             onValueChange = {() => {this.toggleTheMissingSwitch()}}
              value = {this.props.selectedPet.missing}
              style={styles.toggleMissing}
              ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
@@ -74,7 +86,7 @@ class ToggleMissing extends React.Component {
                 {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
               </Text>
               <Switch
-               onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+               onValueChange = {() => {this.toggleTheMissingSwitch()}}
                value = {this.props.selectedPet.missing}
                style={styles.toggleMissing}
                ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
@@ -98,17 +110,13 @@ class ToggleMissing extends React.Component {
           {this.props.selectedPet.missing ? 'My pet is missing!😟' : 'Safe and sound 😃'}
         </Text>
         <Switch
-          onValueChange = {() => {this.props.toggleMissing(this.props.selectedPet)}}
+          onValueChange = {() => {this.toggleTheMissingSwitch()}}
           value = {this.props.selectedPet.missing}
           style={styles.toggleMissing}
           ios_backgroundColor={this.props.selectedPet.missing ? '#d63031' : '#00b894'}
           trackColor={{false: '#00b894', true: '#d63031'}}/>
       </SafeAreaView>
     }
-  }
-
-  handleMissingToggle = () => {
-
   }
 
   goToLoc = () => {
@@ -165,4 +173,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { toggleMissing})(ToggleMissing);
+export default connect(mapStateToProps, {toggleMissing})(ToggleMissing);
