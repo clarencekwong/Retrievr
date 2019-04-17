@@ -7,15 +7,38 @@ import dateFormat from 'dateformat';
 
 export default class PetCard extends React.Component {
 
+  renderInstagramButton = () => {
+    if (this.props.selectedPet.instagram) {
+      return (<View style={{flex: 1, flexDirection: 'row'}}>
+        <Image
+          source={{uri: `${this.props.selectedPet.image}`}}
+          style={styles.petImage}
+        />
+        <TouchableOpacity style={{height:45, width: 45, marginLeft: 90}} onPress={()=> Linking.openURL(`http://instagram.com/${this.props.selectedPet.instagram}`)}>
+        <Image
+          source={{uri: `https://cdn.pixabay.com/photo/2016/09/17/07/03/instagram-1675670_960_720.png`}}
+          style={{height: 45, width: 45}}
+        />
+        </TouchableOpacity>
+      </View>
+    )
+  } else {
+    return (<View style={{flex: 1, flexDirection: 'row'}}>
+        <Image
+          source={{uri: `${this.props.selectedPet.image}`}}
+          style={styles.petImage}
+        />
+      </View>
+    )
+  }
+  }
+
 
   render() {
     return (
         <View style={styles.petCardContainer}>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 22}}>{this.props.selectedPet.name}</Text>
-          <Image
-            source={{uri: `${this.props.selectedPet.image}`}}
-            style={styles.petImage}
-          />
+          {this.renderInstagramButton()}
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.age}</Text>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>Next Vet Visit: {this.props.selectedPet.last_vet_visit ? dateFormat(this.props.selectedPet.last_vet_visit, "mmmm dS, yyyy") : "Not scheduled yet"}</Text>

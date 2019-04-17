@@ -3,7 +3,7 @@ import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView
 import {connect} from 'react-redux'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import PetAdapter from '../Redux/PetAdapter';
-import {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet} from '../Redux/actions'
+import {onChangeTextInstagram, onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet} from '../Redux/actions'
 
 
 class AddPet extends React.Component {
@@ -15,6 +15,7 @@ class AddPet extends React.Component {
       breed: this.props.addPetBreed,
       image: this.props.addPetImage,
       user_id: this.props.currentUser,
+      instagram: this.props.addInstagram
     }
     if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.props.addPetImage) {
       fetch('http://10.9.110.252:3000/api/v1/pets/', {
@@ -84,6 +85,13 @@ class AddPet extends React.Component {
             placeholderTextColor='#00b894'
             onChangeText={event => this.props.onChangeTextImage(event)}
           />
+          <TextInput
+            style={styles.input}
+            placeholder='Instagram'
+            autoCapitalize="none"
+            placeholderTextColor='#00b894'
+            onChangeText={event => this.props.onChangeTextInstagram(event)}
+          />
           <TouchableOpacity
             onPress={() => this.addPetToMyProfile()}
             style={styles.submit}>
@@ -143,7 +151,8 @@ function mapStateToProps(state) {
     addPetBreed: state.pet.addPetBreed,
     addPetImage: state.pet.addPetImage,
     currentUser: state.user.currentUser,
+    addInstagram: state.pet.addInstagram,
   }
 }
 
-export default connect(mapStateToProps, {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet})(AddPet);
+export default connect(mapStateToProps, {onChangeTextInstagram, onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet})(AddPet);
