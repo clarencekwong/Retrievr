@@ -11,7 +11,7 @@ class MissingPetPoster extends React.Component {
   state = {
     latitudeMissing: null,
     longitudeMissing: null,
-    PetDescriptors: " ",
+    etDescriptors: " ",
     timeMissing: null,
     flipper: false,
   }
@@ -68,17 +68,17 @@ class MissingPetPoster extends React.Component {
     }
   }
 
+
   createPoster = () => {
-    if (this.state.latitudeMissing && this.state.PetDescriptors) {
+    if (this.state.latitudeMissing && this.state.petDescriptors) {
       let posterData = {
         missing_lat: String(this.state.latitudeMissing),
         missing_lon: String(this.state.longitudeMissing),
         missing_time: this.state.timeMissing,
-        descriptors: this.state.PetDescriptors,
+        descriptors: this.state.etDescriptors,
         pet_id: this.props.selectedPet.id
       }
-      // this.isCyclic(posterData)
-      fetch(`http://10.9.105.24:3000/api/v1/posters/`, {
+      fetch(`http://10.9.110.252:3000/api/v1/posters/`, {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -101,7 +101,7 @@ class MissingPetPoster extends React.Component {
     this.setState({
       latitudeMissing: null,
       longitudeMissing: null,
-      PetDescriptors: " ",
+      petDescriptors: " ",
       timeMissing: null,
     })
     }

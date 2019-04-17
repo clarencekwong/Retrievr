@@ -17,7 +17,7 @@ class AddPet extends React.Component {
       user_id: this.props.currentUser,
     }
     if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.props.addPetImage) {
-      fetch('http://10.9.105.24:3000/api/v1/pets/', {
+      fetch('http://10.9.110.252:3000/api/v1/pets/', {
         method: "POST",
         headers: {
           Accept: 'application/json',

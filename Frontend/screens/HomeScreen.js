@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import PetCardContainer from './PetCardContainer';
 import BottomButtons from './BottomButtons';
 import MissingPetPoster from './MissingPetPoster';
-import {togglePoster} from '../Redux/actions'
+import {togglePoster, fetchMyPets} from '../Redux/actions'
 
 
 class HomeScreen extends React.Component {
@@ -85,10 +85,11 @@ function mapStateToProps(state) {
   return {
     toggleMissingPetPoster: state.pet.toggleMissingPetPoster,
     selectedPet: state.pet.selectedPet,
+    currentUser: state.user.currentUser
   }
 }
 
-export default connect(mapStateToProps, {togglePoster})(HomeScreen)
+export default connect(mapStateToProps, {togglePoster, fetchMyPets})(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {

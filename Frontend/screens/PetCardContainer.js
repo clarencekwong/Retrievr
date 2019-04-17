@@ -9,7 +9,7 @@ import PetCard from './PetCard';
 import ToggleMissing from './ToggleMissing'
 
 
-class PetCardContainer extends React.Component {
+class PetCardContainer extends React.PureComponent {
   state = {
     defaultPet: {
       name: "Your Pet",
@@ -39,8 +39,17 @@ class PetCardContainer extends React.Component {
     }
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.selectedPetArray !== this.props.selectedPetArray) {
+      this.setState({
+        anotherFlipper: !this.state.anotherFlipper
+      })
+    }
+  }
+
   componentDidMount(){
-    this.props.fetchMyPets(this.props.currentUser)
+    this.intervalFetch = setInterval(()=> this.props.fetchMyPets(this.props.currentUser), 3000);
+    // this.props.fetchMyPets(this.props.currentUser)
   }
 
   renderDefaultPet = () => {

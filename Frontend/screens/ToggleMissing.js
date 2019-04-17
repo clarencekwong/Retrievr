@@ -23,7 +23,7 @@ class ToggleMissing extends React.Component {
   }
 
   getItems() {
-    fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
       if (pet.found_latitude !== null) {
@@ -39,7 +39,18 @@ class ToggleMissing extends React.Component {
         this.stopInt()
       }
     })
+    fetch(`http://10.9.110.252:3000/api/v1/posters/`)
+    .then(r=>r.json())
+    .then(posters => {
+      let resolvedPosters = posters.filter(poster => poster.pet.missing === false)
+      for (let i = 0; i < resolvedPosters.length; i++) {
+        fetch(`http://10.9.110.252:3000/api/v1/posters/${resolvedPosters[i].id}`, {
+          method: "DELETE"
+        })
+      }
+    })
   }
+
 
   stopInt = () => {
     clearInterval(this.interval)
@@ -47,13 +58,6 @@ class ToggleMissing extends React.Component {
 
   toggleTheMissingSwitch = () => {
     this.props.toggleMissing(this.props.selectedPet)
-    if (this.props.selectedPet.posters) {
-      if (!this.props.selectedPet.missing) {
-        fetch(`http://10.9.105.24:3000/api/v1/posters/${this.props.selectedPet.posters.id}`, {
-          method: "DELETE"
-        })
-      }
-    }
   }
 
   renderLostPetLocButton = () => {

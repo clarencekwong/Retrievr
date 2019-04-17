@@ -37,8 +37,17 @@
 
 
 
-  <% @posters.each do |poster| %>
-    <% if poster.pet.missing == true %>
+  <% if @posters.length < 1 %>
+    <div class="poster-container">
+      <div class="poster">
+        <h1 style="text-align: center; font-size: 60px; color: red;">No pets are currently missing!</h1>
+        <div class="pet-image">
+          <img src="https://thumbs.gfycat.com/MellowDeadLacewing-size_restricted.gif" height="300" width="380">
+        </div>
+      </div>
+    </div>
+    <% else %>
+    <% @posters.each do |poster| %>
       <div class="poster-container">
         <div class="poster" onclick="mapsSelector(<%= poster.missing_lat%>, <%= poster.missing_lon%>)">
           <h1 style="text-align: center; font-size: 60px; color: red;">Missing</h1>
@@ -55,15 +64,6 @@
           <p class="bottom" style="font-size: 28px;"> Click this poster for the last known location of this pet<p>
         </div>
       </div>
-    <% else %>
-    <div class="poster-container">
-      <div class="poster">
-        <h1 style="text-align: center; font-size: 60px; color: red;">No pets are currently missing!</h1>
-        <div class="pet-image">
-          <img src="https://thumbs.gfycat.com/MellowDeadLacewing-size_restricted.gif" height="300" width="380">
-        </div>
-      </div>
-    </div>
     <% end %>
   <% end %>
   <script>

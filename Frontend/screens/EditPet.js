@@ -16,15 +16,17 @@ class EditPet extends React.Component {
     vetSelector: false,
   }
 
-
+  vetSelectorToggle = () => {
+    this.setState({vetSelector: !this.state.vetSelector})
+  }
 
   componentDidMount() {
-    fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.pet.id}`)
+    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.pet.id}`)
     .then(r=>r.json())
     .then(pet => {
       this.setState({ vet: pet.vet})
     })
-    fetch("http://10.9.105.24:3000/api/v1/vets")
+    fetch("http://10.9.110.252:3000/api/v1/vets")
     .then(res => res.json())
     .then(vets => {
       this.setState({ vets: vets })
@@ -35,7 +37,7 @@ class EditPet extends React.Component {
     if (this.state.scheduler) {
       return <ScheduleVetAppointment pet={this.props.pet} vet={this.state.vet}/>
     } else if (this.state.vetSelector) {
-      return <VetDropdown vets={this.state.vets} />
+      return <VetDropdown vets={this.state.vets} vetSelectorToggle={this.vetSelectorToggle}/>
     }
   }
 

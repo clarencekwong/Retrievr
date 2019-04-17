@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {TouchableOpacity, View, Text} from 'react-native'
+import {TouchableOpacity, View, Text, Alert} from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import {connect} from 'react-redux'
@@ -16,7 +16,7 @@ class ScheduleVetAppointment extends Component {
       appoint = {
         last_vet_visit: this.state.date
       }
-      fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.pet.id}`, {
+      fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.pet.id}`, {
         method: "PATCH",
         headers: {
           Accept: 'application/json',

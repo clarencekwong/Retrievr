@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Picker} from 'react-native'
+import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Picker, Alert} from 'react-native'
 import {connect} from 'react-redux'
 import PetAdapter from '../Redux/PetAdapter';
 import {onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage} from '../Redux/actions'
@@ -22,7 +22,7 @@ class VetDropdown extends React.Component {
     let petVet = {
       vet_id: this.state.selectedVet
     }
-    fetch(`http://10.9.105.24:3000/api/v1/pets/${this.props.selectedPet.id}`, {
+    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.selectedPet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -30,6 +30,14 @@ class VetDropdown extends React.Component {
       },
       body: JSON.stringify(petVet)
     })
+    Alert.alert(
+      `Success!`,
+      `Your vet has been added`,
+      [
+        {text: 'OK', onPress: () => this.props.vetSelectorToggle()},
+      ],
+      {cancelable: false},
+    )
   }
 
   render() {
