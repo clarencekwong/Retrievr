@@ -13,6 +13,7 @@ export default class PetEditButtons extends React.Component {
     renderPetEditor: false,
   }
 
+
   renderEditPet = () => {
     if (this.state.renderPetEditor) {
       return <EditPet pet={this.props.pet} />

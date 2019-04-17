@@ -10,10 +10,8 @@ import AddPet from '../screens/AddPet'
 import SettingsScreen from '../screens/SettingsScreen'
 
 export default createAppContainer(createSwitchNavigator({
-  // You could add another route here for authentication.
   LogIn: LogIn,
   SignUp: SignUp,
-  AddPet: AddPet,
   SettingsScreen: SettingsScreen,
   Main: MainTabNavigator,
 }));

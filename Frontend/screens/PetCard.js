@@ -2,11 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, Image, Button } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import ToggleMissing from './ToggleMissing'
-// import {connect} from 'react-redux'
-
-
-
-
+import dateFormat from 'dateformat';
 
 
 export default class PetCard extends React.Component {
@@ -22,7 +18,7 @@ export default class PetCard extends React.Component {
           />
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.age}</Text>
-          <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>Last Vet Visit: {this.props.selectedPet.last_vet_visit}</Text>
+          <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>Next Vet Visit: {this.props.selectedPet.last_vet_visit ? dateFormat(this.props.selectedPet.last_vet_visit, "mmmm dS, yyyy") : "Not scheduled yet"}</Text>
         </View>
     );
   }
@@ -30,7 +26,7 @@ export default class PetCard extends React.Component {
 
 const styles = StyleSheet.create({
   petCardContainer: {
-    height: '62%',
+    height: '70%',
     backgroundColor: '#00b894',
     // borderWidth: 2,
     borderColor: 'white',
@@ -45,5 +41,3 @@ const styles = StyleSheet.create({
 
   },
 });
-
-// export default connect(mapStateToProps)(PetCard)

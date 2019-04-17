@@ -4,7 +4,7 @@ import { ExpoLinksView } from '@expo/samples';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import { BarCodeScanner, Camera, Permissions } from 'expo';
 import {connect} from 'react-redux'
-
+import PetAdapter from '../Redux/PetAdapter'
 import MessagePetOwner from './MessagePetOwner';
 import {sendFinderInfo, toggleMissingPetFound, fetchFoundPet, setFinderLoc} from '../Redux/actions'
 
@@ -64,30 +64,45 @@ class LinksScreen extends React.Component {
     this.props.setFinderLoc(petId)
     this.setState({ scanned: true })
     this.props.fetchFoundPet(petId)
-    this.props.sendFinderInfo(this.props.currentUser)
-    let pos = {
-      finder_name: this.props.finderName,
-      finder_phone_number: this.props.finderPhone,
-      found_latitude: this.props.foundPetLat,
-      found_longitude: this.props.foundPetLon,
-    }
-    fetch(`http://10.9.107.37:3000/api/v1/pets/${petId}`, {
-      method: "PATCH",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(pos)
+    PetAdapter.getFoundPet(petId)
+    .then(pet => {
+      if (pet.missing) {
+        this.props.sendFinderInfo(this.props.currentUser)
+        let pos = {
+          finder_name: this.props.finderName,
+          finder_phone_number: this.props.finderPhone,
+          found_latitude: this.props.foundPetLat,
+          found_longitude: this.props.foundPetLon,
+        }
+        fetch(`http://10.9.110.252:3000/api/v1/pets/${petId}`, {
+          method: "PATCH",
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(pos)
+        })
+        Alert.alert(
+          'Owner Found!',
+          "Let them know you found their pet...",
+          [
+            {text: 'OK', onPress: () => this.props.navigation.navigate('Main'),
+          },
+          ],
+          {cancelable: false},
+        )
+      } else {
+        Alert.alert(
+          'Uh Oh!',
+          "This pet has not been marked lost by the owner",
+          [
+            {text: 'OK', onPress: () => this.props.navigation.navigate('Main'),
+          },
+          ],
+          {cancelable: false},
+        )
+      }
     })
-    Alert.alert(
-      'Owner Found!',
-      "Let them know you found their pet...",
-      [
-        {text: 'OK', onPress: () => this.props.navigation.navigate('Main'),
-      },
-      ],
-      {cancelable: false},
-    )
   }
 }
 

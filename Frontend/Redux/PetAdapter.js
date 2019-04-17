@@ -1,6 +1,6 @@
 export default class PetAdapter {
-  static PET_URL = "http://10.9.107.37:3000/api/v1/pets"
-  static USER_URL = "http://10.9.107.37:3000/api/v1/users"
+  static PET_URL = "http://10.9.110.252:3000/api/v1/pets"
+  static USER_URL = "http://10.9.110.252:3000/api/v1/users"
 //****** When changing the url to whatever my wifi port is... DO NOT FORGET THE HTTP://
   static getPets() {
     return fetch(`${this.PET_URL}`)
@@ -33,3 +33,27 @@ export default class PetAdapter {
       .then(res => res.json())
   }
 }
+// IF I RUN INTO THE "CAN'T STRINGIFY CYCLIC DATA" ERROR...
+/*
+isCyclic = obj => {
+  var seenObjects = [];
+
+  function detect (obj) {
+    if (obj && typeof obj === 'object') {
+      if (seenObjects.indexOf(obj) !== -1) {
+        return true;
+      }
+      seenObjects.push(obj);
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key) && detect(obj[key])) {
+          console.log(obj, 'cycle at ' + key);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  return detect(obj);
+}
+*/

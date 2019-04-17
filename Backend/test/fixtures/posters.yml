@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  missing_lat: MyString
+  missing_lon: MyString
+  descriptors: MyString
+  missing_time: 2019-04-15 15:02:41
+  comments: MyString
+
+two:
+  missing_lat: MyString
+  missing_lon: MyString
+  descriptors: MyString
+  missing_time: 2019-04-15 15:02:41
+  comments: MyString

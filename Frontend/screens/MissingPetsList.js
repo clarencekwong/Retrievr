@@ -11,7 +11,7 @@ export default class MissingPetsList extends React.Component {
     return (
       <SafeAreaView style={styles.missingPetsListIcon}>
         <TouchableOpacity
-          onPress={null}
+          onPress={ ()=>{ Linking.openURL('http://10.9.110.252:3000/missing-posters')}}
           style={styles.missingPetsContainer}
           >
           <Image
