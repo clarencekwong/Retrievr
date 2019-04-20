@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   bottomButtons: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 25,
     marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',

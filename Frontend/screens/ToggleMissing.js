@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                   Has THREE fetches                      //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Image, Switch, Button, Alert, Linking } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
@@ -23,10 +29,11 @@ class ToggleMissing extends React.Component {
   }
 
   getItems() {
-    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
-      if (pet.found_latitude !== null) {
+      if (pet.found_latitude) {
+        console.log(pet.found_latitude);
         this.setState({ finderPhone: pet.finder_phone_number, petHasBeenLocated: true, lat: pet.found_latitude, lon: pet.found_longitude })
         Alert.alert(
           `${this.props.selectedPet.name} has been found!`,
@@ -39,12 +46,12 @@ class ToggleMissing extends React.Component {
         this.stopInt()
       }
     })
-    fetch(`http://10.9.110.252:3000/api/v1/posters/`)
+    fetch(`http://192.168.0.140:3000/api/v1/posters/`)
     .then(r=>r.json())
     .then(posters => {
       let resolvedPosters = posters.filter(poster => poster.pet.missing === false)
       for (let i = 0; i < resolvedPosters.length; i++) {
-        fetch(`http://10.9.110.252:3000/api/v1/posters/${resolvedPosters[i].id}`, {
+        fetch(`http://192.168.0.140:3000/api/v1/posters/${resolvedPosters[i].id}`, {
           method: "DELETE"
         })
       }

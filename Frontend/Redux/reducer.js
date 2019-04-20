@@ -94,7 +94,7 @@ function petReducer(state = initialPetState, action) {
     break;
     case ADD_PET_INSTAGRAM:
       return {...state,
-        addPetImage: action.payload,
+        addInstagram: action.payload,
       }
     break;
     case CLEAR_ADD_PET:
@@ -116,6 +116,27 @@ function petReducer(state = initialPetState, action) {
       return {...state,
         toggleAptChange: !state.toggleAptChange,
       }
+    case LOG_OUT:
+      return {
+        ...state,
+        selectedPetArray: [],
+        selectedPetIndex: 0,
+        selectedPet: { },
+        ownerName: null,
+        foundPet: null,
+        foundPetMissing: null,
+        foundPetLat: null,
+        foundPetLon: null,
+        addPetName: null,
+        addPetAge: null,
+        addPetBreed: null,
+        addPetImage: null,
+        addInstagram: null,
+        passiveTrigger: false,
+        toggleAptChange: false,
+        toggleMissingPetPoster: false,
+      }
+    break;
     default:
       return state;
   }
@@ -173,10 +194,20 @@ function userReducer(state = initialUserState, action) {
         };
     break;
     case LOG_OUT:
-      return {
-        ...state,
-        currentUser: null
+    console.log("before", state.currentUser);
+      return {...state,
+        currentUser: null,
+        name: "",
+        email: "",
+        password: "",
+        passwordConfirmation: "",
+        phone: "",
+        coords: null,
+        token: { },
+        loading: true,
+        error: null,
       }
+      console.log("after", state.currentUser);
     break;
     default:
       return state;

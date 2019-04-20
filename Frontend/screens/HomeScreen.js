@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import PetCardContainer from './PetCardContainer';
 import BottomButtons from './BottomButtons';
 import MissingPetPoster from './MissingPetPoster';
-import {togglePoster, fetchMyPets} from '../Redux/actions'
+import {togglePoster} from '../Redux/actions'
 
 
 class HomeScreen extends React.Component {
@@ -89,7 +89,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {togglePoster, fetchMyPets})(HomeScreen)
+export default connect(mapStateToProps, {togglePoster})(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -180,6 +180,6 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   aContainer: {
-    height: '80%'
+    height: '85%'
   }
 });

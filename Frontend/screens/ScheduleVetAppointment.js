@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React, { Component } from 'react'
 import {TouchableOpacity, View, Text, Alert} from 'react-native'
 import DatePicker from 'react-native-datepicker'
@@ -16,7 +22,7 @@ class ScheduleVetAppointment extends Component {
       appoint = {
         last_vet_visit: this.state.date
       }
-      fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.pet.id}`, {
+      fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.pet.id}`, {
         method: "PATCH",
         headers: {
           Accept: 'application/json',

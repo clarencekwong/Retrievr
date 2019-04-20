@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Alert } from 'react-native'
 import {connect} from 'react-redux'
@@ -18,7 +24,7 @@ class AddPet extends React.Component {
       instagram: this.props.addInstagram
     }
     if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.props.addPetImage) {
-      fetch('http://10.9.110.252:3000/api/v1/pets/', {
+      fetch('http://192.168.0.140.195:3000/api/v1/pets/', {
         method: "POST",
         headers: {
           Accept: 'application/json',

@@ -14,9 +14,9 @@ export default class PetCard extends React.Component {
           source={{uri: `${this.props.selectedPet.image}`}}
           style={styles.petImage}
         />
-        <TouchableOpacity style={{height:45, width: 45, marginLeft: 90}} onPress={()=> Linking.openURL(`http://instagram.com/${this.props.selectedPet.instagram}`)}>
+        <TouchableOpacity style={{height:45, width: 45, marginLeft: 70}} onPress={()=> Linking.openURL(`http://instagram.com/${this.props.selectedPet.instagram}`)}>
         <Image
-          source={{uri: `https://cdn.pixabay.com/photo/2016/09/17/07/03/instagram-1675670_960_720.png`}}
+          source={{uri: `https://image.flaticon.com/icons/png/512/174/174855.png`}}
           style={{height: 45, width: 45}}
         />
         </TouchableOpacity>
@@ -39,9 +39,9 @@ export default class PetCard extends React.Component {
         <View style={styles.petCardContainer}>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 22}}>{this.props.selectedPet.name}</Text>
           {this.renderInstagramButton()}
-          <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
+          <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.age}</Text>
-          <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>Next Vet Visit: {this.props.selectedPet.last_vet_visit ? dateFormat(this.props.selectedPet.last_vet_visit, "mmmm dS, yyyy") : "Not scheduled yet"}</Text>
+          <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, paddingBottom: 10, fontSize: 16}}>Next Vet Visit: {this.props.selectedPet.last_vet_visit ? dateFormat(this.props.selectedPet.last_vet_visit, "mmmm dS, yyyy") : "Not scheduled yet"}</Text>
         </View>
     );
   }
@@ -49,7 +49,7 @@ export default class PetCard extends React.Component {
 
 const styles = StyleSheet.create({
   petCardContainer: {
-    height: '70%',
+    height: '74%',
     backgroundColor: '#00b894',
     // borderWidth: 2,
     borderColor: 'white',
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   petImage: {
     marginTop: 5,
     marginLeft: 10,
-    height: 114,
-    width: 172,
+    width: 200,
+    height: 140,
     borderRadius: 5,
 
   },
