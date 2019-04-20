@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Picker, Alert} from 'react-native'
 import {connect} from 'react-redux'
@@ -22,7 +28,7 @@ class VetDropdown extends React.Component {
     let petVet = {
       vet_id: this.state.selectedVet
     }
-    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.selectedPet.id}`, {
+    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.selectedPet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

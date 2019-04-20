@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, TextInput, Button } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
@@ -17,7 +23,7 @@ class MessagePetOwner extends React.Component {
       found_latitude: String(this.props.coords.coords.latitude),
       found_longitude: String(this.props.coords.coords.longitude),
     }
-    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.foundPet.id}`, {
+    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.foundPet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

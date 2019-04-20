@@ -1,8 +1,14 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import { View, AsyncStorage, Alert } from 'react-native';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import PetAdapter from './PetAdapter';
 
-import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, CLEAR_ADD_PET, CHANGE_APPOINTMENT, TOGGLE_POSTER } from './types';
+import { TOGGLE_MISSING, GET_MY_PETS, FOUND_A_PET, TOGGLE_MISSING_PET_FOUND, LOCATION, GET_TOKEN, SAVE_TOKEN, REMOVE_TOKEN, LOADING, ERROR, EMAIL_INPUT, PASSWORD_INPUT, PASSWORD_CONFIRMATION, PHONE_INPUT, ADD_PET_NAME, ADD_PET_AGE, ADD_PET_BREED, ADD_PET_IMAGE, ADD_PET_USER_ID, INCREMENT_MY_PET_INDEX, SET_USER, OPTIMISTIC_TOGGLE, LOG_OUT, FINDER_INFO, CLEAR_ADD_PET, CHANGE_APPOINTMENT, TOGGLE_POSTER, ADD_PET_INSTAGRAM, NAME_INPUT } from './types';
 
 
 //////////////////////////////////////////////////////////////
@@ -19,7 +25,7 @@ export function toggleMissing(pet) {
       found_latitude: null,
       found_longitude: null,
     }
-    fetch(`http://10.9.110.252:3000/api/v1/pets/${pet.id}`, {
+    fetch(`http://192.168.0.140:3000/api/v1/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',
@@ -229,6 +235,21 @@ export function onChangeTextPhone(event) {
   }
 }
 
+export function setUser(email) {
+  return dispatch => {
+    PetAdapter.getUsers()
+    .then(users => {
+      let newUser = users.filter(user => user.email === email)
+      let selectedUser = newUser[0]
+      let newUserId = selectedUser.id
+      dispatch({
+        type: SET_USER,
+        payload: newUserId
+      })
+    })
+  }
+}
+
 //////////////////////////////////////////////////////////////
 //                                                          //
 //                     Adding a pet                         //
@@ -255,6 +276,12 @@ export function onChangeTextPetBreed(event) {
 export function onChangeTextImage(event) {
   return {
     type: ADD_PET_IMAGE,
+    payload: event
+  }
+}
+export function onChangeTextInstagram(event) {
+  return {
+    type: ADD_PET_INSTAGRAM,
     payload: event
   }
 }

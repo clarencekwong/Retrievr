@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, Alert} from 'react-native'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import {connect} from 'react-redux'
-import {onChangeTextName, onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone, onSignUp} from '../Redux/actions'
+import {setUser, onChangeTextName, onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone, onSignUp} from '../Redux/actions'
 import PetAdapter from '../Redux/PetAdapter';
 import * as EmailValidator from 'email-validator';
 
@@ -19,7 +19,8 @@ class SignUp extends React.Component {
     }
     if (this.props.password === this.props.passwordConfirmation && EmailValidator.validate(this.props.email) && (this.props.phone.length === 10) && (this.props.name !== null)) {
       PetAdapter.postToUsers(signUpData)
-      this.props.navigation.navigate('SettingsScreen')
+      this.props.setUser(this.props.email)
+      this.props.navigation.navigate('Main')
     } else {
       Alert.alert(
       'Invalid Credentials',
@@ -150,7 +151,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {onChangeTextName, onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone})(SignUp);
+export default connect(mapStateToProps, {setUser, onChangeTextName, onChangeTextEmail, onChangeTextPassword, onChangeTextPasswordConfirmation, onChangeTextPhone})(SignUp);
 
 /**************************************************
 - get redirected here on /sign up/ button click from LogIn page

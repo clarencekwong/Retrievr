@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                    Has TWO fetches                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
@@ -21,12 +27,12 @@ class EditPet extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://10.9.110.252:3000/api/v1/pets/${this.props.pet.id}`)
+    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.pet.id}`)
     .then(r=>r.json())
     .then(pet => {
       this.setState({ vet: pet.vet})
     })
-    fetch("http://10.9.110.252:3000/api/v1/vets")
+    fetch("http://192.168.0.140:3000/api/v1/vets")
     .then(res => res.json())
     .then(vets => {
       this.setState({ vets: vets })

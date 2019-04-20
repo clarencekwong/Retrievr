@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react';
 import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Linking} from 'react-native'
 import { ExpoConfigView } from '@expo/samples';
@@ -22,7 +28,7 @@ class SettingsScreen extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://10.9.110.252:3000/api/v1/users/${this.props.currentUser}`)
+    fetch(`http://192.168.0.140:3000/api/v1/users/${this.props.currentUser}`)
     .then(r=>r.json())
     .then(user => {
       this.setState({ me: user })

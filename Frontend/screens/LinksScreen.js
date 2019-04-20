@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//                      Has ONE fetch                       //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, Alert, Button } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
@@ -74,7 +80,7 @@ class LinksScreen extends React.Component {
           found_latitude: this.props.foundPetLat,
           found_longitude: this.props.foundPetLon,
         }
-        fetch(`http://10.9.110.252:3000/api/v1/pets/${petId}`, {
+        fetch(`http://192.168.0.140:3000/api/v1/pets/${petId}`, {
           method: "PATCH",
           headers: {
             Accept: 'application/json',
