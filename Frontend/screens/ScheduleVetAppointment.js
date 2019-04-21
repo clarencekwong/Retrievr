@@ -22,7 +22,7 @@ class ScheduleVetAppointment extends Component {
       appoint = {
         last_vet_visit: this.state.date
       }
-      fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.pet.id}`, {
+      fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${this.props.pet.id}`, {
         method: "PATCH",
         headers: {
           Accept: 'application/json',

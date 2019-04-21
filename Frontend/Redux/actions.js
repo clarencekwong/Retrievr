@@ -25,7 +25,7 @@ export function toggleMissing(pet) {
       found_latitude: null,
       found_longitude: null,
     }
-    fetch(`http://192.168.0.140:3000/api/v1/pets/${pet.id}`, {
+    fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

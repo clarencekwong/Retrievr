@@ -28,7 +28,7 @@ class SettingsScreen extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://192.168.0.140:3000/api/v1/users/${this.props.currentUser}`)
+    fetch(`http://retrievr-api.herokuapp.com/api/v1/users/${this.props.currentUser}`)
     .then(r=>r.json())
     .then(user => {
       this.setState({ me: user })

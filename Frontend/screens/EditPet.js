@@ -27,12 +27,12 @@ class EditPet extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.pet.id}`)
+    fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${this.props.pet.id}`)
     .then(r=>r.json())
     .then(pet => {
       this.setState({ vet: pet.vet})
     })
-    fetch("http://192.168.0.140:3000/api/v1/vets")
+    fetch("http://retrievr-api.herokuapp.com/api/v1/vets")
     .then(res => res.json())
     .then(vets => {
       this.setState({ vets: vets })

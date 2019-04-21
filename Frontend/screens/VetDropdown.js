@@ -28,7 +28,7 @@ class VetDropdown extends React.Component {
     let petVet = {
       vet_id: this.state.selectedVet
     }
-    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.selectedPet.id}`, {
+    fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${this.props.selectedPet.id}`, {
       method: "PATCH",
       headers: {
         Accept: 'application/json',

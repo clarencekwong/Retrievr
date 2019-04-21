@@ -24,7 +24,7 @@ class AddPet extends React.Component {
       instagram: this.props.addInstagram
     }
     if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.props.addPetImage) {
-      fetch('http://192.168.0.140.195:3000/api/v1/pets/', {
+      fetch('http://retrievr-api.herokuapp.com/api/v1/pets/', {
         method: "POST",
         headers: {
           Accept: 'application/json',

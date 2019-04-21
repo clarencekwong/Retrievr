@@ -29,7 +29,7 @@ class ToggleMissing extends React.Component {
   }
 
   getItems() {
-    fetch(`http://192.168.0.140:3000/api/v1/pets/${this.props.selectedPet.id}`)
+    fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
       if (pet.found_latitude) {
@@ -46,12 +46,12 @@ class ToggleMissing extends React.Component {
         this.stopInt()
       }
     })
-    fetch(`http://192.168.0.140:3000/api/v1/posters/`)
+    fetch(`http://retrievr-api.herokuapp.com/api/v1/posters/`)
     .then(r=>r.json())
     .then(posters => {
       let resolvedPosters = posters.filter(poster => poster.pet.missing === false)
       for (let i = 0; i < resolvedPosters.length; i++) {
-        fetch(`http://192.168.0.140:3000/api/v1/posters/${resolvedPosters[i].id}`, {
+        fetch(`http://retrievr-api.herokuapp.com/api/v1/posters/${resolvedPosters[i].id}`, {
           method: "DELETE"
         })
       }

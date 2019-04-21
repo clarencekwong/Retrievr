@@ -84,7 +84,7 @@ class MissingPetPoster extends React.Component {
         descriptors: this.state.etDescriptors,
         pet_id: this.props.selectedPet.id
       }
-      fetch(`http://192.168.0.140:3000/api/v1/posters/`, {
+      fetch(`http://retrievr-api.herokuapp.com/api/v1/posters/`, {
         method: "POST",
         headers: {
           Accept: 'application/json',
