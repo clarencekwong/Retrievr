@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, SafeAreaView} from 'react-native'
+import { View, Button, TextInput, StyleSheet, AsyncStorage, Image, KeyboardAvoidingView, TouchableOpacity, Text, SafeAreaView, ScrollView} from 'react-native'
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import {connect} from 'react-redux'
 import {onChangeTextEmail, onChangeTextPassword, setCurrentUser} from '../Redux/actions'
@@ -21,7 +21,7 @@ class LogIn extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.signUpContainer} behavior='padding'>
-        <SafeAreaView>
+        <ScrollView>
           <View style={styles.welcomeContainer}>
             <Image
                 source={require('../assets/images/bouncing-dog.gif')}
@@ -55,7 +55,7 @@ class LogIn extends React.Component {
               <Text style={{color: 'white', fontSize: 18, marginTop: 5, textAlign: 'center'}}>Sign Up</Text>
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        </ScrollView>
       </KeyboardAvoidingView>
     );
   }

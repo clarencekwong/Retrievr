@@ -25,7 +25,9 @@ class ToggleMissing extends React.Component {
 
   componentDidMount() {
     this.setState({ petHasBeenLocated: false })
-    this.interval = setInterval(()=> this.getItems(), 3000);
+    if (!(this.props.selectedPet.name === "Your Pet")) {
+      this.interval = setInterval(()=> this.getItems(), 3000);
+    }
   }
 
   getItems() {

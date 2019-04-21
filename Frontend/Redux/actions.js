@@ -60,9 +60,11 @@ export function toggleAptChange() {
 //                                                          //
 //////////////////////////////////////////////////////////////
 export function filterPets(userObj) {
-  return {
-    type: GET_MY_PETS,
-    payload: userObj.pets
+  if (userObj.pets.length > 0) {
+    return {
+      type: GET_MY_PETS,
+      payload: userObj.pets
+    }
   }
 }
 
