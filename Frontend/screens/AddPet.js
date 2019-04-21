@@ -7,23 +7,27 @@
 import React from 'react'
 import { View, Button, TextInput, StyleSheet, AsyncStorage, KeyboardAvoidingView, TouchableOpacity, Text, ScrollView, Alert } from 'react-native'
 import {connect} from 'react-redux'
+import { ImagePicker, Permissions } from 'expo';
 import { createStackNavigator, navigate, NavigationActions, navigation } from 'react-navigation';
 import PetAdapter from '../Redux/PetAdapter';
 import {onChangeTextInstagram, onChangeTextPetName, onChangeTextPetAge, onChangeTextPetBreed, onChangeTextImage, clearAddPet} from '../Redux/actions'
 
-
 class AddPet extends React.Component {
+
+  state = {
+    addPetImage: null
+  }
 
   addPetToMyProfile = () => {
     let petAttr = {
       name: this.props.addPetName,
       age: parseInt(this.props.addPetAge),
       breed: this.props.addPetBreed,
-      image: this.props.addPetImage,
+      image: this.state.addPetImage,
       user_id: this.props.currentUser,
       instagram: this.props.addInstagram
     }
-    if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.props.addPetImage) {
+    if (this.props.addPetName && this.props.addPetAge && this.props.addPetBreed && this.state.addPetImage) {
       fetch('http://retrievr-api.herokuapp.com/api/v1/pets/', {
         method: "POST",
         headers: {
@@ -59,6 +63,18 @@ class AddPet extends React.Component {
     }
   }
 
+  pickImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    if (!result.cancelled) {
+      this.setState({ addPetImage: result.uri });
+    }
+  };
+
   render() {
     return (
       <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#00b894'}}>
@@ -84,13 +100,12 @@ class AddPet extends React.Component {
             placeholderTextColor='#00b894'
             onChangeText={event => this.props.onChangeTextPetBreed(event)}
           />
-          <TextInput
+          <TouchableOpacity
             style={styles.input}
-            placeholder='Image URL'
-            autoCapitalize="none"
-            placeholderTextColor='#00b894'
-            onChangeText={event => this.props.onChangeTextImage(event)}
-          />
+            title="Add photo"
+            onPress={this.pickImage}>
+            <Text style={{color: '#00b894', fontSize: 18, marginTop: 8, fontWeight: '500'}}>Add Image</Text>
+            </TouchableOpacity>
           <TextInput
             style={styles.input}
             placeholder='Instagram'
@@ -155,7 +170,7 @@ function mapStateToProps(state) {
     addPetName: state.pet.addPetName,
     addPetAge: state.pet.addPetAge,
     addPetBreed: state.pet.addPetBreed,
-    addPetImage: state.pet.addPetImage,
+    // addPetImage: state.pet.addPetImage,
     currentUser: state.user.currentUser,
     addInstagram: state.pet.addInstagram,
   }

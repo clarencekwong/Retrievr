@@ -48,9 +48,7 @@ class PetCardContainer extends React.PureComponent {
   }
 
   componentDidMount(){
-    if (this.props.selectedPet) {
-      this.intervalFetch = setInterval(()=> this.props.fetchMyPets(this.props.currentUser), 3000);
-    }
+    this.intervalFetch = setInterval(()=> this.props.fetchMyPets(this.props.currentUser), 3000);
   }
 
   renderDefaultPet = () => {
