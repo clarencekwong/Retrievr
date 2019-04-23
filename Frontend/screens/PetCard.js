@@ -28,7 +28,7 @@ export default class PetCard extends React.Component {
       if (this.state.qrOrImgToggle) {
         return (<View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 10}}>
             <QRCode
-            value={`retrievr-api.herokuapp.com/missing-pets ${this.props.selectedPet.id}`}
+            value={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
             size={140}
             bgColor='black'
             fgColor='#00b894'
@@ -60,7 +60,7 @@ export default class PetCard extends React.Component {
     if (this.state.qrOrImgToggle) {
       return (<View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 10}}>
           <QRCode
-          value={`retrievr-api.herokuapp.com/missing-pets ${this.props.selectedPet.id}`}
+          value={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
           size={140}
           bgColor='black'
           fgColor='#00b894'
@@ -82,7 +82,7 @@ export default class PetCard extends React.Component {
 
   render() {
     return (
-        <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap}>
+        <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap} activeOpacity={0.9}>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 22}}>{this.props.selectedPet.name}</Text>
           {this.renderInstagramButton()}
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.breed}</Text>

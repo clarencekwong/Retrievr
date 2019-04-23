@@ -88,8 +88,9 @@ class PetCardContainer extends React.PureComponent {
 const styles = StyleSheet.create({
   petCardContainer: {
     height: '70%',
-    borderTopEndRadius: 10,
-    borderTopStartRadius: 10,
+    borderRadius: 10,
+    // borderTopEndRadius: 10,
+    // borderTopStartRadius: 10,
     marginHorizontal: 20,
   },
 });

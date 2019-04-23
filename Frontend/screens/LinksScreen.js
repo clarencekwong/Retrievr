@@ -66,7 +66,7 @@ class LinksScreen extends React.Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
-    let petId = data.split(" ").pop()
+    let petId = data.split("#").pop()
     this.props.setFinderLoc(petId)
     this.setState({ scanned: true })
     this.props.fetchFoundPet(petId)
