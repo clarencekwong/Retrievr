@@ -116,18 +116,34 @@ export function sendFinderInfo(userId) {
 //                                                          //
 //////////////////////////////////////////////////////////////
 
-export function cycleMyPets(index, length) {
-  if (index > (length - 2)) {
-    index = 0
-    return {
-      type: INCREMENT_MY_PET_INDEX,
-      payload: index
+export function cycleMyPets(index, length, direction) {
+  if (direction === 'right') {
+    if (index > (length - 2)) {
+      index = 0
+      return {
+        type: INCREMENT_MY_PET_INDEX,
+        payload: index
+      }
+    } else {
+      index ++
+      return {
+        type: INCREMENT_MY_PET_INDEX,
+        payload: index
+      }
     }
-  } else {
-    index ++
-    return {
-      type: INCREMENT_MY_PET_INDEX,
-      payload: index
+  } else if (direction === 'left') {
+    if (index < 1) {
+      index = (length - 1)
+      return {
+        type: INCREMENT_MY_PET_INDEX,
+        payload: index
+      }
+    } else {
+      index --
+      return {
+        type: INCREMENT_MY_PET_INDEX,
+        payload: index
+      }
     }
   }
 }
@@ -275,12 +291,7 @@ export function onChangeTextPetBreed(event) {
     payload: event
   }
 }
-export function onChangeTextImage(event) {
-  return {
-    type: ADD_PET_IMAGE,
-    payload: event
-  }
-}
+
 export function onChangeTextInstagram(event) {
   return {
     type: ADD_PET_INSTAGRAM,

@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Lin
 import { ExpoLinksView } from '@expo/samples';
 import {fetchMyPets, cycleMyPets} from "../Redux/actions";
 import {connect} from 'react-redux'
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 
 import PetCard from './PetCard';
@@ -27,17 +29,26 @@ class PetCardContainer extends React.PureComponent {
     }
   }
 
-  lastTap = null
+  // lastTap = null
+  //
+  // doubleTap = () => {
+  //   const now = Date.now()
+  //   const DOUBLE_PRESS_DELAY = 300
+  //   if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
+  //     this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length)
+  //   } else {
+  //     this.lastTap = now
+  //   }
+  // }
 
-  doubleTap = () => {
-    const now = Date.now()
-    const DOUBLE_PRESS_DELAY = 300
-    if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
-      this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length)
-    } else {
-      this.lastTap = now
-    }
+  onSwipeRight = gestureState => {
+    this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length, 'right')
   }
+
+  onSwipeLeft = gestureState => {
+    this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length, 'left')
+  }
+
 
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.selectedPetArray !== this.props.selectedPetArray) {
@@ -69,10 +80,19 @@ class PetCardContainer extends React.PureComponent {
 
 
   render() {
+    const config = {
+      velocityThreshold: 0.3,
+      directionalOffsetThreshold: 80
+    }
     return (
-      <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap}>
+      <GestureRecognizer
+        onSwipeRight={(state) => this.onSwipeRight(state)}
+        onSwipeLeft={(state) => this.onSwipeLeft(state)}
+        config={config}
+        style={styles.petCardContainer}
+      >
         {this.renderDefaultPet()}
-      </TouchableOpacity>
+      </GestureRecognizer>
     );
   }
 }
