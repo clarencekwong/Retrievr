@@ -30,7 +30,7 @@ HOME SCREEN:
 
 * Add pets via settings page.
 
-* If a user has multiple pets, they can double tap on the top half of the screen to cycle through their pets
+* If a user has multiple pets, they can swipe on the top half of the screen to cycle through their pets
 
 * Mark a pet as missing by selecting the toggle (defaulted as "Safe and Sound")
 

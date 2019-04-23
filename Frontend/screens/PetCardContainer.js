@@ -29,18 +29,6 @@ class PetCardContainer extends React.PureComponent {
     }
   }
 
-  // lastTap = null
-  //
-  // doubleTap = () => {
-  //   const now = Date.now()
-  //   const DOUBLE_PRESS_DELAY = 300
-  //   if (this.lastTap && (now - this.lastTap) < DOUBLE_PRESS_DELAY) {
-  //     this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length)
-  //   } else {
-  //     this.lastTap = now
-  //   }
-  // }
-
   onSwipeRight = gestureState => {
     this.props.cycleMyPets(this.props.selectedPetIndex, this.props.selectedPetArray.length, 'right')
   }
