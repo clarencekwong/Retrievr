@@ -17,7 +17,7 @@ class MissingPetPoster extends React.Component {
   state = {
     latitudeMissing: null,
     longitudeMissing: null,
-    etDescriptors: " ",
+    petDescriptorsState: null,
     timeMissing: null,
     flipper: false,
   }
@@ -60,7 +60,7 @@ class MissingPetPoster extends React.Component {
         <Fragment>
           <TextInput value={'Here'} style={styles.simpleInput} editable={this.state.missing_lat ? false : true}/>
           <TextInput value={'Now'} style={styles.simpleInput} editable={false}/>
-          <TextInput placeholder={"descriptors"} style={styles.biggerInput} editable={true} onChange={event => this.setState({petDescriptors: event})}/>
+          <TextInput placeholder={"descriptors"} style={styles.biggerInput} editable={true} onChange={event => this.setState({petDescriptorsState: event})}/>
         </Fragment>
       )
     } else {
@@ -68,7 +68,7 @@ class MissingPetPoster extends React.Component {
         <Fragment>
           <TextInput placeholder={`Where did you last see ${this.props.selectedPet.name}?`} style={styles.simpleInput} editable={true} onChange={event => this.setState({missing_lat: event})}/>
           <TextInput placeholder={`When did you last see ${this.props.selectedPet.name}?`} style={styles.simpleInput} editable={true} onChange={event => this.setState({missing_time: event})}/>
-          <TextInput placeholder={"descriptors"} style={styles.biggerInput} editable={true} onChange={event => this.setState({petDescriptors: event})}/>
+          <TextInput placeholder={"descriptors"} style={styles.biggerInput} editable={true} onChange={event => this.setState({petDescriptorsState: event})}/>
         </Fragment>
       )
     }
@@ -76,12 +76,11 @@ class MissingPetPoster extends React.Component {
 
 
   createPoster = () => {
-    if (this.state.latitudeMissing && this.state.petDescriptors) {
+    if (this.state.latitudeMissing && this.state.petDescriptorsState) {
       let posterData = {
         missing_lat: String(this.state.latitudeMissing),
         missing_lon: String(this.state.longitudeMissing),
         missing_time: this.state.timeMissing,
-        descriptors: this.state.etDescriptors,
         pet_id: this.props.selectedPet.id
       }
       fetch(`http://retrievr-api.herokuapp.com/api/v1/posters/`, {
@@ -107,7 +106,7 @@ class MissingPetPoster extends React.Component {
     this.setState({
       latitudeMissing: null,
       longitudeMissing: null,
-      petDescriptors: " ",
+      petDescriptorsState: null,
       timeMissing: null,
     })
     }
