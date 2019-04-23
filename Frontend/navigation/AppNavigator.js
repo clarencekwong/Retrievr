@@ -9,6 +9,7 @@ import AuthLoading from '../screens/AuthLoading'
 import AddPet from '../screens/AddPet'
 import SettingsScreen from '../screens/SettingsScreen'
 
+
 export default createAppContainer(createSwitchNavigator({
   LogIn: LogIn,
   SignUp: SignUp,

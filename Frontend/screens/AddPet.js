@@ -170,7 +170,6 @@ function mapStateToProps(state) {
     addPetName: state.pet.addPetName,
     addPetAge: state.pet.addPetAge,
     addPetBreed: state.pet.addPetBreed,
-    // addPetImage: state.pet.addPetImage,
     currentUser: state.user.currentUser,
     addInstagram: state.pet.addInstagram,
   }

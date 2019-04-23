@@ -99,13 +99,13 @@ class LinksScreen extends React.Component {
         )
       } else {
         Alert.alert(
-          'Uh Oh!',
-          "This pet has not been marked lost by the owner",
+          `Meet ${pet.name}!`,
+          `Check out ${pet.name}'s Instagram`,
           [
-            {text: 'OK', onPress: () => this.props.navigation.navigate('Main'),
+            {text: 'OK', onPress: ()=> Linking.openURL(`http://instagram.com/${pet.instagram}`),
           },
           ],
-          {cancelable: false},
+          {cancelable: true},
         )
       }
     })
