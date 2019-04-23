@@ -28,7 +28,7 @@ export default class PetCard extends React.Component {
       if (this.state.qrOrImgToggle) {
         return (<View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 10}}>
             <QRCode
-            value={`retrievr-api.herokuapp.com/missing-pets ${this.props.selectedPet.id}`}
+            value={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
             size={140}
             bgColor='black'
             fgColor='#00b894'
@@ -60,7 +60,7 @@ export default class PetCard extends React.Component {
     if (this.state.qrOrImgToggle) {
       return (<View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 10}}>
           <QRCode
-          value={`retrievr-api.herokuapp.com/missing-pets ${this.props.selectedPet.id}`}
+          value={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
           size={140}
           bgColor='black'
           fgColor='#00b894'
