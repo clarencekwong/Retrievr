@@ -14,7 +14,7 @@ export default class BottomButtons extends React.Component {
     return (
       <Fragment>
         <View style={styles.bottomButtons}>
-          <Store />
+          
           <MissingPetsList />
         </View>
       </Fragment>
