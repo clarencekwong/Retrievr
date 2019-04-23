@@ -39,7 +39,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <SafeAreaView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <TouchableOpacity style={styles.welcomeContainer}>
             <Image
               source={
@@ -51,7 +51,7 @@ class HomeScreen extends React.Component {
             />
           </TouchableOpacity>
           {this.toggleButtons()}
-        </ScrollView>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     );
   }
@@ -109,14 +109,12 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
     marginBottom: 5,
   },
   welcomeImage: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
-    marginTop: 3,
     marginLeft: -10,
   },
   getStartedContainer: {

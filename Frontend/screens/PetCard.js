@@ -82,7 +82,7 @@ export default class PetCard extends React.Component {
 
   render() {
     return (
-        <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap}>
+        <TouchableOpacity style={styles.petCardContainer} onPress={this.doubleTap} activeOpacity={0.9}>
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 10, fontSize: 22}}>{this.props.selectedPet.name}</Text>
           {this.renderInstagramButton()}
           <Text style={{color: 'white', paddingLeft: 10, paddingTop: 5, fontSize: 16}}>{this.props.selectedPet.breed}</Text>
