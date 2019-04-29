@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Lin
 import { ExpoLinksView } from '@expo/samples';
 import ToggleMissing from './ToggleMissing'
 import dateFormat from 'dateformat';
-import QRCode from 'react-native-qrcode';
+import { QRCode } from 'react-native-custom-qr-codes';
 
 export default class PetCard extends React.Component {
 
@@ -27,12 +27,17 @@ export default class PetCard extends React.Component {
     if (this.props.selectedPet.instagram) {
       if (this.state.qrOrImgToggle) {
         return (<View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 10}}>
-            <QRCode
-            value={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
-            size={140}
-            bgColor='black'
-            fgColor='#00b894'
-            />
+        <QRCode
+        content={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
+        size={140}
+        codeStyle='circle'
+        outerEyeStyle='circle'
+        innerEyeStyle='circle'
+        logo={require('../assets/images/PetFinder_v1_icon.001.jpeg')}
+        logoSize={50}
+        ecl='H'
+        linearGradient={['#00b894','black']} gradientDirection={[0,170,0,0]}
+        />
           <TouchableOpacity style={{height:45, width: 45, marginLeft: 130, marginTop: -10}} onPress={()=> Linking.openURL(`http://instagram.com/${this.props.selectedPet.instagram}`)}>
           <Image
             source={{uri: `https://image.flaticon.com/icons/png/512/174/174855.png`}}
@@ -60,10 +65,15 @@ export default class PetCard extends React.Component {
     if (this.state.qrOrImgToggle) {
       return (<View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginLeft: 10}}>
           <QRCode
-          value={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
+          content={`retrievr-api.herokuapp.com/missing-posters#${this.props.selectedPet.id}`}
           size={140}
-          bgColor='black'
-          fgColor='#00b894'
+          codeStyle='circle'
+          outerEyeStyle='circle'
+          innerEyeStyle='circle'
+          logo={require('../assets/images/PetFinder_v1_icon.001.jpeg')}
+          logoSize={50}
+          ecl='H'
+          linearGradient={['#00b894','black']} gradientDirection={[0,170,0,0]}
           />
         </View>
         )

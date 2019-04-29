@@ -27,7 +27,7 @@ export default class MissingPetsList extends React.Component {
 const styles = StyleSheet.create({
   missingPetsListIcon: {
     height: '100%',
-    width: '100%',
+    width: '75%',
     // width: 140,
     borderWidth: 2,
     borderColor: '#d63031',
