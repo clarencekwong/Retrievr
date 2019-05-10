@@ -18,8 +18,8 @@
       margin-bottom: 30px;
       margin-left: 50px;
       display: inline-block;
-      width: 600px;
-      height: 820px;
+      height: 65%;
+      text-align: center;
     }
     .top-label {
       display: inline;
@@ -32,6 +32,14 @@
       padding-left: 100px;
       padding-right: 100px;
     }
+    .found-button {
+      margin-left: 15%;
+      width: 70%;
+      height: 80px;
+      background-color: #1320E0;
+      border-radius: 10px;
+    }
+
   </style>
 </head>
 <body>
@@ -49,15 +57,31 @@
       <div class="pet-image">
         <img src=<%=@pet.image%> height="300" width="380">
       </div>
-      <p class="bottom" style="font-size: 42px;">Age: <%= @pet.age %> </p>
       <% if @pet.posters.length > 0 %>
-        <p class="bottom" style="font-size: 28px;"> Owner: <%= @pet.user.name %></p>
-        <p class="bottom" style="font-size: 28px;"> Call: <%= @pet.user.phone %></p>
-        <p class="bottom" style="font-size: 28px;"> Missing since: <%= @pet.posters.first.missing_time %></p>
+        <p class="bottom" style="font-size: 38px;"> Owner: <%= @pet.user.name %></p>
+        <p class="bottom" style="font-size: 38px;"> Call: <%= link_to @pet.user.phone, "tel:#{@pet.user.phone}" %></p>
+        <div class="found-button" onclick="notifyOwner( <%= @pet.id %> , <%= @pet.user.phone %> )">
+          <p style="text-align: center; color: white; padding-top: 30px; font-size: 120%;">Let <%= @pet.user.name %> know you found <%= @pet.name %></p>
+        </div>
+      <% else %>
+        <p class="bottom" style="font-size: 42px;">Age: <%= @pet.age %></p>
       <% end %>
     </div>
   </div>
   <script>
-
+    function notifyOwner(petId, phone) {
+      let pos = {
+        finder_name: "Found",
+      }
+      fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${petId}`, {
+        method: "PATCH",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(pos)
+      })
+      alert("Please call the owner!")
+    }
   </script>
 </body>
