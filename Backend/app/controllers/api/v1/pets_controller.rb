@@ -1,12 +1,14 @@
 class Api::V1::PetsController < ApplicationController
+
   before_action :find_pet, only: [:update, :show]
+
   def index
     @pets = Pet.all
     render json: @pets
   end
 
   def show
-    render json: @pet
+    render json: @pet 
   end
 
   def create
@@ -32,6 +34,6 @@ class Api::V1::PetsController < ApplicationController
   end
 
   def pet_params
-    params.permit(:id, :name, :age, :breed, :missing, :image, :last_vet_visit, :missing_latitude, :missing_longitude, :found_latitude, :found_longitude, :finder_name, :finder_phone_number, :user_id, :vet_id, :instagram)
+    params.permit(:id, :name, :age, :breed, :missing, :image, :last_vet_visit, :missing_latitude, :missing_longitude, :found_latitude, :found_longitude, :finder_name, :finder_phone_number, :user_id, :vet_id, :instagram, :posters_id)
   end
 end

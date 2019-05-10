@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+//                                                          //
+//          Don't forget to put the Store back              //
+//                                                          //
+//////////////////////////////////////////////////////////////
+
 import React, {Fragment} from 'react';
 import { ScrollView, StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Linking, KeyboardAvoidingView } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
@@ -14,7 +20,7 @@ export default class BottomButtons extends React.Component {
     return (
       <Fragment>
         <View style={styles.bottomButtons}>
-          <Store />
+
           <MissingPetsList />
         </View>
       </Fragment>

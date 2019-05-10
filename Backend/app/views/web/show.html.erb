@@ -1,0 +1,63 @@
+<head>
+  <style>
+    body {
+      background-image: url("https://bear.org/wp-content/uploads/2008/01/marking_utility_pole_mud.jpg");
+      background-repeat: no-repeat, repeat;
+      background-position: center;
+      background-size: cover;
+      font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+    .poster-container {
+      text-align: center;
+    }
+    .poster {
+      background-image: url("https://i.pinimg.com/originals/b2/34/4f/b2344f505822df9ff64c7641c55c4159.jpg");
+      background-color: rgb(244, 243, 239, 0.6);
+      background-repeat: no-repeat, repeat;
+      background-position: center;
+      margin-bottom: 30px;
+      margin-left: 50px;
+      display: inline-block;
+      width: 600px;
+      height: 820px;
+    }
+    .top-label {
+      display: inline;
+      font-size: 48px
+    }
+    .breed {
+      padding-left: 100px;
+    }
+    .pet-image {
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="poster-container">
+    <div class="poster">
+      <% if @pet.missing %>
+        <h1 style="text-align: center; font-size: 60px; color: red;">Missing</h1>
+      <% else %>
+        <h1 style="text-align: center; font-size: 60px; color: green;">Safe!</h1>
+      <% end %>
+      <div>
+        <h2 class="top-label"><%= @pet.name %></h2>
+        <h2 class="top-label breed"><%= @pet.breed %></h2>
+      </div>
+      <div class="pet-image">
+        <img src=<%=@pet.image%> height="300" width="380">
+      </div>
+      <p class="bottom" style="font-size: 42px;">Age: <%= @pet.age %> </p>
+      <% if @pet.posters.length > 0 %>
+        <p class="bottom" style="font-size: 28px;"> Owner: <%= @pet.user.name %></p>
+        <p class="bottom" style="font-size: 28px;"> Call: <%= @pet.user.phone %></p>
+        <p class="bottom" style="font-size: 28px;"> Missing since: <%= @pet.posters.first.missing_time %></p>
+      <% end %>
+    </div>
+  </div>
+  <script>
+
+  </script>
+</body>

@@ -34,8 +34,7 @@ class ToggleMissing extends React.Component {
     fetch(`http://retrievr-api.herokuapp.com/api/v1/pets/${this.props.selectedPet.id}`)
     .then(result => result.json())
     .then(pet => {
-      if (pet.found_latitude) {
-        console.log(pet.found_latitude);
+      if (pet.finder_name) {
         this.setState({ finderPhone: pet.finder_phone_number, petHasBeenLocated: true, lat: pet.found_latitude, lon: pet.found_longitude })
         Alert.alert(
           `${this.props.selectedPet.name} has been found!`,
