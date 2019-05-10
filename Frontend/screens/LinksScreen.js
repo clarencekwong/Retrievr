@@ -28,7 +28,6 @@ class LinksScreen extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted'  });
-    geolocation.requestAuthorization();
   }
 
   runBarCodeScanner = () => {

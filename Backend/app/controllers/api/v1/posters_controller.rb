@@ -1,5 +1,7 @@
 class Api::V1::PostersController < ApplicationController
+
   before_action :find_poster, only: [:update, :show]
+
   def index
     @posters = Poster.all
     render json: @posters

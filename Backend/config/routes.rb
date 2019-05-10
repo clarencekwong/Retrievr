@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     end
   end
   get '/missing-posters', to: 'web#index'
+  get '/profile/:id', to: 'web#show'
 end
