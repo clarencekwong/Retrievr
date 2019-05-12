@@ -83,5 +83,13 @@
       })
       alert("Please call the owner!")
     }
+
+    function redirectFound() {
+      if (!<%= @pet.missing %>) {
+        window.location.replace("http://retrievr-api.herokuapp.com/missing-posters")
+      }
+    }
+
+    window.redirectFound()
   </script>
 </body>
