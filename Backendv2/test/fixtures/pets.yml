@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  breed: MyString
+  instagram: MyString
+  birthate: MyString
+  missing: false
+  found_lat: MyString
+  found_long: MyString
+  finder_phone: MyString
+  finder_name: MyString
+
+two:
+  name: MyString
+  breed: MyString
+  instagram: MyString
+  birthate: MyString
+  missing: false
+  found_lat: MyString
+  found_long: MyString
+  finder_phone: MyString
+  finder_name: MyString
