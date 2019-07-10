@@ -48,6 +48,22 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.167.0)
+    aws-sdk-core (3.53.1)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.21.0)
+      aws-sdk-core (~> 3, >= 3.53.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.40.0)
+      aws-sdk-core (~> 3, >= 3.53.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.0)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.12)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
@@ -67,6 +83,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    jmespath (1.4.0)
     jsonapi-renderer (0.2.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -138,6 +155,9 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    valid_email2 (3.0.1)
+      activemodel (>= 3.2)
+      mail (~> 2.5)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -147,6 +167,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  aws-sdk-s3
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
@@ -159,6 +180,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  valid_email2
 
 RUBY VERSION
    ruby 2.6.0p0
